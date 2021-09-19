@@ -1,4 +1,5 @@
 import { Directive, Input } from '@angular/core';
+import { CoerceBoolean } from '../../core/common/coerce-boolean-inputs.decorator';
 
 @Directive({
   selector: 'button[adrButton]',
@@ -18,7 +19,8 @@ export class ButtonDirective {
   public size: 'small' | 'medium' | 'large' = 'medium';
 
   @Input()
-  public outlined: boolean = false;
+  @CoerceBoolean()
+  public outlined?: boolean;
 
   @Input()
   public color?: 'primary' | 'accent' | 'warn';
