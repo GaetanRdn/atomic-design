@@ -1,0 +1,5 @@
+@use 'src/components/atoms/button/button';
+
+@mixin ad-theme($config) {
+  @include button.adr-button($config);
+}

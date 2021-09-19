@@ -1,0 +1,7 @@
+<ng-container *ngFor="let color of colors">
+    <ng-container *ngFor="let outlined of outlineds">
+        <ng-container *ngFor="let size of sizes">
+            <button [color]="color" [outlined]="outlined" [size]="size" adrButton>Button</button>
+        </ng-container>
+    </ng-container>
+</ng-container>
