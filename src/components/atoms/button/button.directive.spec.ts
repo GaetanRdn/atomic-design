@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonDirective } from 'src/components/atoms/button/button.directive';
+import { ButtonDirective } from './button.directive';
 
 describe('ButtonDirective', () => {
   describe('Main use cases', () => {
