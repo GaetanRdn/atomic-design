@@ -1,4 +1,4 @@
-![example workflow](https://github.com/GaetanRdn/atomic-design/actions/workflows/build/badge.svg)
+![CI](https://github.com/GaetanRdn/atomic-design/actions/workflows/build.yml/badge.svg)
 
 # AtomicDesign
 
