@@ -64,7 +64,7 @@ describe('ButtonDirective', () => {
 
 @Component({
   template: `
-      <button adButton [size]="size" [outlined]="outlined" [color]="color">Click Me</button>`
+      <button adrButton [size]="size" [outlined]="outlined" [color]="color">Click Me</button>`
 })
 class HostComponent {
   public size?: 'small' | 'medium' | 'large';

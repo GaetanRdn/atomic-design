@@ -1,16 +1,16 @@
 import { Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: 'button[adButton]',
+  selector: 'button[adrButton]',
   host: {
-    class: 'ad-button',
-    '[class.ad-small]': 'size === "small"',
-    '[class.ad-medium]': 'size === "medium"',
-    '[class.ad-large]': 'size === "large"',
-    '[class.outlined]': 'outlined',
-    '[class.ad-primary]': 'color === "primary"',
-    '[class.ad-accent]': 'color === "accent"',
-    '[class.ad-warn]': 'color === "warn"'
+    class: 'adr-button',
+    '[class.adr-small]': 'size === "small"',
+    '[class.adr-medium]': 'size === "medium"',
+    '[class.adr-large]': 'size === "large"',
+    '[class.adr-outlined]': 'outlined',
+    '[class.adr-primary]': 'color === "primary"',
+    '[class.adr-accent]': 'color === "accent"',
+    '[class.adr-warn]': 'color === "warn"'
   }
 })
 export class ButtonDirective {
