@@ -1,3 +1,5 @@
+![example workflow](https://github.com/GaetanRdn/atomic-design/actions/workflows/Build/badge.svg)
+
 # AtomicDesign
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
