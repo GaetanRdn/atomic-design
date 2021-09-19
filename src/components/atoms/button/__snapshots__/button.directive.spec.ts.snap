@@ -1,6 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ButtonDirective should create default button 1`] = `
+exports[`ButtonDirective Coerce outlined case should generate outlined button 1`] = `
+<button
+  adrbutton=""
+  class="adr-button adr-medium adr-outlined"
+  outlined=""
+>
+  Click Me
+</button>
+`;
+
+exports[`ButtonDirective Main use cases should create default button 1`] = `
 <button
   adrbutton=""
   class="adr-button"
@@ -9,7 +19,7 @@ exports[`ButtonDirective should create default button 1`] = `
 </button>
 `;
 
-exports[`ButtonDirective when color is accent then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when color is accent then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-accent"
@@ -18,7 +28,7 @@ exports[`ButtonDirective when color is accent then check snapshot 1`] = `
 </button>
 `;
 
-exports[`ButtonDirective when color is primary then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when color is primary then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-primary"
@@ -27,7 +37,7 @@ exports[`ButtonDirective when color is primary then check snapshot 1`] = `
 </button>
 `;
 
-exports[`ButtonDirective when color is warn then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when color is warn then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-warn"
@@ -36,7 +46,7 @@ exports[`ButtonDirective when color is warn then check snapshot 1`] = `
 </button>
 `;
 
-exports[`ButtonDirective when outlined is set to false then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when outlined is set to false then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button"
@@ -45,7 +55,7 @@ exports[`ButtonDirective when outlined is set to false then check snapshot 1`] =
 </button>
 `;
 
-exports[`ButtonDirective when outlined is set to true then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when outlined is set to true then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-outlined"
@@ -54,7 +64,7 @@ exports[`ButtonDirective when outlined is set to true then check snapshot 1`] = 
 </button>
 `;
 
-exports[`ButtonDirective when size is large then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when size is large then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-large"
@@ -63,7 +73,7 @@ exports[`ButtonDirective when size is large then check snapshot 1`] = `
 </button>
 `;
 
-exports[`ButtonDirective when size is medium then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when size is medium then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-medium"
@@ -72,7 +82,7 @@ exports[`ButtonDirective when size is medium then check snapshot 1`] = `
 </button>
 `;
 
-exports[`ButtonDirective when size is small then check snapshot 1`] = `
+exports[`ButtonDirective Main use cases when size is small then check snapshot 1`] = `
 <button
   adrbutton=""
   class="adr-button adr-small"
