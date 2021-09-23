@@ -17,3 +17,7 @@ We use the snapshot feature to improve the test quality.
 ## Lint
 
 Run `ng lint` to execute the linter [ESLint](https://eslint.org/)
+
+## Storybook
+
+Run `npm run storybook` to launch [storybook](https://storybook.js.org/) on port 6006
