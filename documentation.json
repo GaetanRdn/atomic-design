@@ -8,17 +8,18 @@
     "directives": [
         {
             "name": "ButtonDirective",
-            "id": "directive-ButtonDirective-14a7c0d2f49ffa2a1ca0d006617ace42",
+            "id": "directive-ButtonDirective-41ffeb4c9b63deeac292e3c9d58520c1",
             "file": "src/components/atoms/button/button.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, Input } from '@angular/core';\r\nimport { CoerceBoolean } from '../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'button[adrButton]',\r\n  host: {\r\n    class: 'adr-button',\r\n    '[class.adr-small]': 'size === \"small\"',\r\n    '[class.adr-medium]': 'size === \"medium\"',\r\n    '[class.adr-large]': 'size === \"large\"',\r\n    '[class.adr-outlined]': 'outlined',\r\n    '[class.adr-primary]': 'color === \"primary\"',\r\n    '[class.adr-accent]': 'color === \"accent\"',\r\n    '[class.adr-warn]': 'color === \"warn\"'\r\n  }\r\n})\r\nexport class ButtonDirective {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public outlined?: boolean;\r\n\r\n  @Input()\r\n  public color?: 'primary' | 'accent' | 'warn';\r\n}\r\n",
+            "sourceCode": "import { Directive, Input } from '@angular/core';\r\nimport { CoerceBoolean } from '../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'button[adrButton]',\r\n  host: {\r\n    class: 'adr-button',\r\n    '[class.adr-small]': 'size === \"small\"',\r\n    '[class.adr-medium]': 'size === \"medium\"',\r\n    '[class.adr-large]': 'size === \"large\"',\r\n    '[class.adr-outlined]': 'outlined',\r\n    '[class.adr-primary]': 'color === \"primary\"',\r\n    '[class.adr-accent]': 'color === \"accent\"',\r\n    '[class.adr-warn]': 'color === \"warn\"'\r\n  }\r\n})\r\nexport class ButtonDirective {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public outlined?: boolean;\r\n\r\n  @Input()\r\n  public color: 'primary' | 'accent' | 'warn' = 'primary';\r\n}\r\n",
             "selector": "button[adrButton]",
             "providers": [],
             "inputsClass": [
                 {
                     "name": "color",
+                    "defaultValue": "'primary'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 26,
