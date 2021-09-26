@@ -39,5 +39,7 @@ jobs:
           npm run predeploy
 
       - name: Deploy
+        env:
+          GH_TOKEN: MyCompany:${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run deploy-storybook --ci
