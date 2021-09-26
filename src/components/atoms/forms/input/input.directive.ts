@@ -1,4 +1,5 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Input, OnDestroy, Output } from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';
 import { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';
 
 @Directive({
@@ -8,7 +9,8 @@ import { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decora
     '[class.adr-focused]': 'focused || null'
   }
 })
-export class InputDirective implements OnDestroy {
+@AutoUnsubscribe()
+export class InputDirective {
   @HostBinding('attr.value')
   @Input()
   public value: any;
@@ -43,9 +45,5 @@ export class InputDirective implements OnDestroy {
     if (!this.readonly && !this.disabled) {
       this._focused = focused;
     }
-  }
-
-  public ngOnDestroy(): void {
-    this.valueChange.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, OnDestroy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TemplateLookup } from '../../../core/tests/template-lookup';
 import { InputDirective } from './input.directive';
@@ -76,6 +76,18 @@ describe('InputDirective', () => {
 
       // THEN
       expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+
+    test('check OnDestroy', () => {
+      // GIVEN
+      let input: InputDirective = templateLookup.get('input').injector.get(InputDirective);
+      jest.spyOn(input.valueChange, 'unsubscribe');
+
+      // WHEN
+      (input as unknown as OnDestroy).ngOnDestroy();
+
+      // THEN
+      expect(input.valueChange.unsubscribe).toBeCalled();
     });
   });
 
