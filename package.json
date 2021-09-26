@@ -15,7 +15,7 @@
         "storybook": "npm run docs:json && start-storybook -p 6006",
         "build-storybook": "npm run docs:json && build-storybook",
         "predeploy": "npm run build-storybook",
-        "deploy-storybook": "gh-pages -d storybook-static"
+        "deploy-storybook": "gh-pages -d storybook-static --ci"
     },
     "jest": {
         "preset": "jest-preset-angular",
