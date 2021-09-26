@@ -8,12 +8,12 @@
     "directives": [
         {
             "name": "ButtonDirective",
-            "id": "directive-ButtonDirective-447b5541d6187b0f54287f5340cbc136",
+            "id": "directive-ButtonDirective-14a7c0d2f49ffa2a1ca0d006617ace42",
             "file": "src/components/atoms/button/button.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, Input } from '@angular/core';\r\n\r\n@Directive({\r\n  selector: 'button[adrButton]',\r\n  host: {\r\n    class: 'adr-button',\r\n    '[class.adr-small]': 'size === \"small\"',\r\n    '[class.adr-medium]': 'size === \"medium\"',\r\n    '[class.adr-large]': 'size === \"large\"',\r\n    '[class.adr-outlined]': 'outlined',\r\n    '[class.adr-primary]': 'color === \"primary\"',\r\n    '[class.adr-accent]': 'color === \"accent\"',\r\n    '[class.adr-warn]': 'color === \"warn\"'\r\n  }\r\n})\r\nexport class ButtonDirective {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  public outlined: boolean = false;\r\n\r\n  @Input()\r\n  public color?: 'primary' | 'accent' | 'warn';\r\n}\r\n",
+            "sourceCode": "import { Directive, Input } from '@angular/core';\r\nimport { CoerceBoolean } from '../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'button[adrButton]',\r\n  host: {\r\n    class: 'adr-button',\r\n    '[class.adr-small]': 'size === \"small\"',\r\n    '[class.adr-medium]': 'size === \"medium\"',\r\n    '[class.adr-large]': 'size === \"large\"',\r\n    '[class.adr-outlined]': 'outlined',\r\n    '[class.adr-primary]': 'color === \"primary\"',\r\n    '[class.adr-accent]': 'color === \"accent\"',\r\n    '[class.adr-warn]': 'color === \"warn\"'\r\n  }\r\n})\r\nexport class ButtonDirective {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public outlined?: boolean;\r\n\r\n  @Input()\r\n  public color?: 'primary' | 'accent' | 'warn';\r\n}\r\n",
             "selector": "button[adrButton]",
             "providers": [],
             "inputsClass": [
@@ -21,15 +21,14 @@
                     "name": "color",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 24,
+                    "line": 26,
                     "type": "\"primary\" | \"accent\" | \"warn\""
                 },
                 {
                     "name": "outlined",
-                    "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 21,
+                    "line": 23,
                     "type": "boolean"
                 },
                 {
@@ -37,7 +36,7 @@
                     "defaultValue": "'medium'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 18,
+                    "line": 19,
                     "type": "\"small\" | \"medium\" | \"large\""
                 }
             ],
@@ -115,7 +114,7 @@
         },
         {
             "name": "DummyComponent",
-            "id": "component-DummyComponent-ed21ecaa5c4fe78aa3a92d3c436c84fb",
+            "id": "component-DummyComponent-a3d70ba654b354b13131004f92560b5b",
             "file": "src/components/atoms/button/button.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -133,33 +132,24 @@
                     "name": "color",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 24,
-                    "type": "\"primary\" | \"accent\" | \"warn\"",
-                    "inheritance": {
-                        "file": "ButtonDirective"
-                    }
+                    "line": 19,
+                    "type": "\"primary\" | \"accent\" | \"warn\""
                 },
                 {
                     "name": "outlined",
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 21,
-                    "type": "boolean",
-                    "inheritance": {
-                        "file": "ButtonDirective"
-                    }
+                    "line": 16,
+                    "type": "boolean"
                 },
                 {
                     "name": "size",
                     "defaultValue": "'medium'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 18,
-                    "type": "\"small\" | \"medium\" | \"large\"",
-                    "inheritance": {
-                        "file": "ButtonDirective"
-                    }
+                    "line": 13,
+                    "type": "\"small\" | \"medium\" | \"large\""
                 }
             ],
             "outputsClass": [],
@@ -172,11 +162,10 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { ButtonDirective } from 'src/components/atoms/button/button.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <button adrButton [size]=\"size\" [outlined]=\"outlined\" [color]=\"color\">Click</button>`\r\n})\r\nclass DummyComponent extends ButtonDirective {\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/button',\r\n  component: DummyComponent\r\n} as Meta;\r\n\r\nconst Template: Story<DummyComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\nDefault.args = {};\r\n\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { ButtonDirective } from 'src/components/atoms/button/button.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <button adrButton [size]=\"size\" [outlined]=\"outlined\" [color]=\"color\">Click</button>`\r\n})\r\nclass DummyComponent {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  public outlined: boolean = false;\r\n\r\n  @Input()\r\n  public color?: 'primary' | 'accent' | 'warn';\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/button',\r\n  component: DummyComponent\r\n} as Meta;\r\n\r\nconst Template: Story<DummyComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\nDefault.args = {};\r\n\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "",
-            "extends": "ButtonDirective"
+            "stylesData": ""
         }
     ],
     "modules": [
@@ -289,21 +278,21 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\r\n  production: false\r\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\r\n  production: true\r\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\r\n  production: false\r\n}"
             },
             {
                 "name": "Template",
@@ -316,7 +305,18 @@
                 "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
             }
         ],
-        "functions": [],
+        "functions": [
+            {
+                "name": "CoerceBoolean",
+                "file": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": []
+            }
+        ],
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
@@ -342,18 +342,6 @@
                     "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
                 }
             ],
-            "src/environments/environment.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\r\n  production: false\r\n}"
-                }
-            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -365,9 +353,34 @@
                     "type": "object",
                     "defaultValue": "{\r\n  production: true\r\n}"
                 }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\r\n  production: false\r\n}"
+                }
             ]
         },
-        "groupedFunctions": {},
+        "groupedFunctions": {
+            "src/components/core/common/coerce-boolean-inputs.decorator.ts": [
+                {
+                    "name": "CoerceBoolean",
+                    "file": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": []
+                }
+            ]
+        },
         "groupedEnumerations": {},
         "groupedTypeAliases": {}
     },
@@ -419,6 +432,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "CoerceBoolean",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
