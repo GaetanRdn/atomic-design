@@ -16,7 +16,7 @@ class DummyComponent {
   public outlined: boolean = false;
 
   @Input()
-  public color?: 'primary' | 'accent' | 'warn';
+  public color: 'primary' | 'accent' | 'warn' = 'primary';
 }
 
 export default {
@@ -29,5 +29,4 @@ const Template: Story<DummyComponent> = (args) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {};
 
