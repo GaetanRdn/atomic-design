@@ -2,7 +2,7 @@
 
 # AtomicDesign
 
-This project is a design system.
+This project is a design system. You can access to the storybook of the current version [here](https://gaetanrdn.github.io/atomic-design/).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
 
