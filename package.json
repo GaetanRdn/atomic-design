@@ -12,7 +12,8 @@
         "lint": "ng lint",
         "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
         "storybook": "npm run docs:json && start-storybook -p 6006",
-        "build-storybook": "npm run docs:json && build-storybook"
+        "build-storybook": "npm run docs:json && build-storybook",
+        "deploy-storybook": "storybook-to-ghpages"
     },
     "jest": {
         "preset": "jest-preset-angular",
@@ -54,6 +55,7 @@
         "@storybook/angular": "^6.3.8",
         "@storybook/builder-webpack5": "^6.3.8",
         "@storybook/manager-webpack5": "^6.3.8",
+        "@storybook/storybook-deployer": "^2.8.10",
         "@types/jest": "^27.0.1",
         "@types/node": "^12.11.1",
         "@typescript-eslint/eslint-plugin": "4.28.2",
