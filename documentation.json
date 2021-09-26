@@ -4,7 +4,162 @@
     "injectables": [],
     "guards": [],
     "interceptors": [],
-    "classes": [],
+    "classes": [
+        {
+            "name": "TemplateLookup",
+            "id": "class-TemplateLookup-0d23998e8e09b4f4b705afa207028be5",
+            "file": "src/components/core/tests/template-lookup.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "import { DebugElement, Predicate, Type } from '@angular/core';\r\nimport { ComponentFixture } from '@angular/core/testing';\r\nimport { By } from '@angular/platform-browser';\r\n\r\nexport class TemplateLookup<T> {\r\n  get firstChildElement(): HTMLElement {\r\n    return this.fixture.debugElement.children[0].nativeElement;\r\n  }\r\n\r\n  get hostComponent(): T {\r\n    return this.fixture.componentInstance;\r\n  }\r\n\r\n  constructor(public readonly fixture: ComponentFixture<T>) {\r\n  }\r\n\r\n  public detectChanges(): void {\r\n    this.fixture.detectChanges();\r\n  }\r\n\r\n  public get(selectorOrType: string | Type<any>): DebugElement {\r\n    let predicate: Predicate<DebugElement>;\r\n\r\n    if (typeof selectorOrType === 'string') {\r\n      predicate = By.css(selectorOrType);\r\n    } else {\r\n      predicate = By.directive(selectorOrType);\r\n    }\r\n\r\n    return this.fixture.debugElement.query(predicate);\r\n  }\r\n\r\n  public query<T extends HTMLElement>(selectorOrType: string | Type<any>): T {\r\n    return this.get(selectorOrType).nativeElement;\r\n  }\r\n}\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "fixture",
+                        "type": "ComponentFixture<T>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "fixture",
+                        "type": "ComponentFixture<T>",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "fixture",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ComponentFixture<T>",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "modifierKind": [
+                        123,
+                        143
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "detectChanges",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "get",
+                    "args": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "DebugElement",
+                    "typeParameters": [],
+                    "line": 21,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "query",
+                    "args": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "T",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "line": 33,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "accessors": {
+                "firstChildElement": {
+                    "name": "firstChildElement",
+                    "getSignature": {
+                        "name": "firstChildElement",
+                        "type": "",
+                        "returnType": "HTMLElement",
+                        "line": 6
+                    }
+                },
+                "hostComponent": {
+                    "name": "hostComponent",
+                    "getSignature": {
+                        "name": "hostComponent",
+                        "type": "",
+                        "returnType": "T",
+                        "line": 10
+                    }
+                }
+            },
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
     "directives": [
         {
             "name": "ButtonDirective",
@@ -48,6 +203,214 @@
             "hostListeners": [],
             "propertiesClass": [],
             "methodsClass": []
+        },
+        {
+            "name": "InputDirective",
+            "id": "directive-InputDirective-430d545f85dd535f6436eedb720dff88",
+            "file": "src/components/atoms/forms/input/input.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';\r\nimport { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';\r\nimport { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'input[adrInput]',\r\n  host: {\r\n    class: 'adr-input',\r\n    '[class.adr-focused]': 'focused || null'\r\n  }\r\n})\r\n@AutoUnsubscribe()\r\nexport class InputDirective {\r\n  @HostBinding('attr.value')\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n  private _focused: boolean = false;\r\n\r\n  get focused(): boolean {\r\n    return this._focused;\r\n  }\r\n\r\n  @HostListener('input', ['$event.target.value'])\r\n  public onInput(value: any): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this.valueChange.emit(value);\r\n    }\r\n  }\r\n\r\n  @HostListener('focus', ['true'])\r\n  @HostListener('blur', ['false'])\r\n  public onToggleFocus(focused: boolean): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this._focused = focused;\r\n    }\r\n  }\r\n}\r\n",
+            "selector": "input[adrInput]",
+            "providers": [],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "boolean"
+                },
+                {
+                    "name": "readonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 20,
+                    "type": "boolean"
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "valueChange",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 27,
+                    "type": "EventEmitter<any>"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [
+                {
+                    "name": "blur",
+                    "args": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "false"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 44
+                },
+                {
+                    "name": "focus",
+                    "args": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "true"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 44
+                },
+                {
+                    "name": "input",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "$event.target.value"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 36
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "_focused",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "modifierKind": [
+                        121
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onInput",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "decorators": [
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'input', ['$event.target.value']"
+                        }
+                    ],
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onToggleFocus",
+                    "args": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 44,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "decorators": [
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'focus', ['true']"
+                        },
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'blur', ['false']"
+                        }
+                    ],
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "accessors": {
+                "focused": {
+                    "name": "focused",
+                    "getSignature": {
+                        "name": "focused",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 31
+                    }
+                }
+            }
         }
     ],
     "components": [
@@ -115,7 +478,7 @@
         },
         {
             "name": "DummyComponent",
-            "id": "component-DummyComponent-a3d70ba654b354b13131004f92560b5b",
+            "id": "component-DummyComponent-5ef2468e3de3fcdef9d94c8b72b949c0",
             "file": "src/components/atoms/button/button.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -131,6 +494,7 @@
             "inputsClass": [
                 {
                     "name": "color",
+                    "defaultValue": "'primary'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 19,
@@ -163,7 +527,62 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { ButtonDirective } from 'src/components/atoms/button/button.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <button adrButton [size]=\"size\" [outlined]=\"outlined\" [color]=\"color\">Click</button>`\r\n})\r\nclass DummyComponent {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  public outlined: boolean = false;\r\n\r\n  @Input()\r\n  public color?: 'primary' | 'accent' | 'warn';\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/button',\r\n  component: DummyComponent\r\n} as Meta;\r\n\r\nconst Template: Story<DummyComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\nDefault.args = {};\r\n\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { ButtonDirective } from 'src/components/atoms/button/button.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <button adrButton [size]=\"size\" [outlined]=\"outlined\" [color]=\"color\">Click</button>`\r\n})\r\nclass DummyComponent {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  public outlined: boolean = false;\r\n\r\n  @Input()\r\n  public color: 'primary' | 'accent' | 'warn' = 'primary';\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/button',\r\n  component: DummyComponent\r\n} as Meta;\r\n\r\nconst Template: Story<DummyComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\n\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ""
+        },
+        {
+            "name": "InputComponent",
+            "id": "component-InputComponent-542f7feefd4e2c43ec173100a45015be",
+            "file": "src/components/atoms/forms/input/input.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "adr-dummy",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" />",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 19,
+                    "type": "boolean"
+                },
+                {
+                    "name": "readonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "boolean"
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" />`\r\n})\r\nclass InputComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  component: InputComponent\r\n} as Meta;\r\n\r\nconst Template: Story<InputComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\n\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": ""
@@ -261,6 +680,50 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "InputModule",
+            "id": "module-InputModule-5616db285f231b704141810e7313d917",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/atoms/forms/input/input.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { InputDirective } from './input.directive';\r\n\r\n\r\n\r\n@NgModule({\r\n  declarations: [\r\n    InputDirective\r\n  ],\r\n  imports: [\r\n    CommonModule\r\n  ],\r\n  exports: [\r\n    InputDirective\r\n  ]\r\n})\r\nexport class InputModule { }\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "InputDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "InputDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -270,6 +733,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/components/atoms/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -304,9 +777,62 @@
                 "deprecationMessage": "",
                 "type": "Story<DummyComponent>",
                 "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<InputComponent>",
+                "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n})"
             }
         ],
         "functions": [
+            {
+                "name": "AutoUnsubscribe",
+                "file": "src/components/core/common/auto-unsubscribe.decorator.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Allows to auto unsubscribe from Observables.</p>\n<p>Automatically check if a (_)subscriptions property exist (must be a Subscription[]), if yes then unsubscribe all.\nAutomatically check this properties, all one which are Observable and is not in the excludeProps is unsubscribe.</p>\n",
+                "args": [
+                    {
+                        "name": "excludeProps",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "[]"
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 307,
+                            "end": 319,
+                            "flags": 4194304,
+                            "modifierFlagsCache": 0,
+                            "transformFlags": 0,
+                            "kind": 79,
+                            "escapedText": "excludeProps"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "[]",
+                        "tagName": {
+                            "pos": 301,
+                            "end": 306,
+                            "flags": 4194304,
+                            "modifierFlagsCache": 0,
+                            "transformFlags": 0,
+                            "kind": 79,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>list of properties to exclude</p>\n"
+                    }
+                ]
+            },
             {
                 "name": "CoerceBoolean",
                 "file": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
@@ -343,6 +869,28 @@
                     "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
                 }
             ],
+            "src/components/atoms/forms/input/input.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<InputComponent>",
+                    "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n})"
+                }
+            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -369,6 +917,51 @@
             ]
         },
         "groupedFunctions": {
+            "src/components/core/common/auto-unsubscribe.decorator.ts": [
+                {
+                    "name": "AutoUnsubscribe",
+                    "file": "src/components/core/common/auto-unsubscribe.decorator.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Allows to auto unsubscribe from Observables.</p>\n<p>Automatically check if a (_)subscriptions property exist (must be a Subscription[]), if yes then unsubscribe all.\nAutomatically check this properties, all one which are Observable and is not in the excludeProps is unsubscribe.</p>\n",
+                    "args": [
+                        {
+                            "name": "excludeProps",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "[]"
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 307,
+                                "end": 319,
+                                "flags": 4194304,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "excludeProps"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "[]",
+                            "tagName": {
+                                "pos": 301,
+                                "end": 306,
+                                "flags": 4194304,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>list of properties to exclude</p>\n"
+                        }
+                    ]
+                }
+            ],
             "src/components/core/common/coerce-boolean-inputs.decorator.ts": [
                 {
                     "name": "CoerceBoolean",
@@ -387,7 +980,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 0,
+        "count": 7,
         "status": "low",
         "files": [
             {
@@ -438,6 +1031,54 @@
                 "status": "low"
             },
             {
+                "filePath": "src/components/atoms/forms/input/input.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "InputDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "InputComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/common/auto-unsubscribe.decorator.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "AutoUnsubscribe",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
                 "filePath": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
@@ -445,6 +1086,15 @@
                 "name": "CoerceBoolean",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/tests/template-lookup.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "TemplateLookup",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {

@@ -16,10 +16,12 @@ export class InputDirective {
   public value: any;
 
   @Input()
+  @HostBinding('readonly')
   @CoerceBoolean()
   public readonly: boolean = false;
 
   @Input()
+  @HostBinding('disabled')
   @CoerceBoolean()
   public disabled: boolean = false;
 
