@@ -1,4 +1,4 @@
-name: Deploy Storybook
+name: Deploy
 on:
   push:
     branches:
@@ -30,6 +30,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Deploy Storybook
+      - name: Install Dependencies
         run: |
-          npm run deploy-storybook -- --ci
+          npm ci
+
+      - name: Predeploy
+        run: |
+          npm run predeploy
+
+      - name: Deploy
+        run: |
+          npm run deploy-storybook
