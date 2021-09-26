@@ -3,22 +3,33 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ButtonDirective } from './button.directive';
 
 describe('ButtonDirective', () => {
-  describe('Main use cases', () => {
-    let fixture: ComponentFixture<HostComponent>;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ButtonDirective, DefaultComponent, WithSizeComponent, CoerceOutlinedComponent, WithColorsComponent]
+    });
+  });
+
+  describe('Default', () => {
+    let fixture: ComponentFixture<DefaultComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.configureTestingModule({
-        declarations: [ButtonDirective, HostComponent]
-      }).createComponent(HostComponent);
+      fixture = TestBed.createComponent(DefaultComponent);
     });
 
-    test('should create default button', async () => {
+    test('should create default button', () => {
       // WHEN
       fixture.detectChanges();
-      await fixture.whenRenderingDone();
 
       // THEN
       expect(fixture.debugElement.children[0].nativeElement).toMatchSnapshot();
+    });
+  });
+
+  describe('Size cases', () => {
+    let fixture: ComponentFixture<WithSizeComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(WithSizeComponent);
     });
 
     test.each([
@@ -35,16 +46,30 @@ describe('ButtonDirective', () => {
       // THEN
       expect(fixture.debugElement.children[0].nativeElement).toMatchSnapshot();
     });
+  });
 
-    test.each([true, false])('when outlined is set to %s then check snapshot', (outlined: boolean) => {
-      // GIVEN
-      fixture.componentInstance.outlined = outlined;
+  describe('Outlined cases', () => {
+    let fixture: ComponentFixture<CoerceOutlinedComponent>;
 
+    beforeEach(() => {
+      fixture = TestBed.createComponent(CoerceOutlinedComponent);
+    });
+
+    test('should create', () => {
       // WHEN
       fixture.detectChanges();
 
       // THEN
       expect(fixture.debugElement.children[0].nativeElement).toMatchSnapshot();
+    });
+
+  });
+
+  describe('Color cases', () => {
+    let fixture: ComponentFixture<WithColorsComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(WithColorsComponent);
     });
 
     test.each([
@@ -62,34 +87,28 @@ describe('ButtonDirective', () => {
       expect(fixture.debugElement.children[0].nativeElement).toMatchSnapshot();
     });
   });
-
-  describe('Coerce outlined case', () => {
-    let fixture: ComponentFixture<CoerceOutlinedComponent>;
-
-    beforeEach(() => {
-      fixture = TestBed.configureTestingModule({
-        declarations: [ButtonDirective, CoerceOutlinedComponent]
-      }).createComponent(CoerceOutlinedComponent);
-
-      fixture.detectChanges();
-    });
-
-    test('should generate outlined button', () => {
-      expect(fixture.debugElement.children[0].nativeElement).toMatchSnapshot();
-      expect(fixture.debugElement.children[0].classes['adr-outlined']).toBe(true);
-    });
-  });
 });
 
 @Component({
   template: `
-      <button adrButton [size]="size" [outlined]="outlined" [color]="color">Click Me</button>`
+      <button adrButton>Click Me</button>`
 })
-class HostComponent {
-  public size?: 'small' | 'medium' | 'large';
+class DefaultComponent {
+}
 
-  public outlined?: boolean;
+@Component({
+  template: `
+      <button adrButton size="{{size}}">Click Me</button>`
+})
+class WithSizeComponent {
+  public size!: 'small' | 'medium' | 'large';
+}
 
+@Component({
+  template: `
+      <button adrButton color="{{color}}">Click Me</button>`
+})
+class WithColorsComponent {
   public color?: 'primary' | 'accent' | 'warn';
 }
 

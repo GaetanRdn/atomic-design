@@ -23,5 +23,5 @@ export class ButtonDirective {
   public outlined?: boolean;
 
   @Input()
-  public color?: 'primary' | 'accent' | 'warn';
+  public color: 'primary' | 'accent' | 'warn' = 'primary';
 }
