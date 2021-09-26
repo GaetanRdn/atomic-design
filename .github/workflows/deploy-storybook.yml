@@ -40,4 +40,4 @@ jobs:
 
       - name: Deploy
         run: |
-          npm run deploy-storybook
+          npm run deploy-storybook --ci
