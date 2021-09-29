@@ -31,12 +31,17 @@ $config: (
                         font-size: 24px,
                         font-weight: 400,
                 ),
+                input: (
+                        font-family: Lato,
+                        font-size: 16px,
+                        font-weight: 400,
+                ),
         ),
         colors: (
                 primary: (
                         color: colors.$primary-text,
                         background-color: colors.$primary,
-                        border-color: #000051
+                        border-color: colors.$primary-dark
                 ),
                 primary-light: (
                         color: colors.$primary-light-text,
@@ -49,7 +54,7 @@ $config: (
                 accent: (
                         color: colors.$accent-text,
                         background-color: colors.$accent,
-                        border-color: #1C313A
+                        border-color: colors.$accent-dark
                 ),
                 accent-light: (
                         color: colors.$accent-light-text,
@@ -62,7 +67,7 @@ $config: (
                 warn: (
                         color: colors.$warn-text,
                         background-color: colors.$warn,
-                        border-color: #8E0000
+                        border-color: colors.$warn-dark
                 ),
                 warn-light: (
                         color: colors.$warn-light-text,
@@ -71,6 +76,11 @@ $config: (
                 warn-dark: (
                         color: colors.$warn-dark-text,
                         background-color: colors.$warn-dark,
+                ),
+                disabled: (
+                        color: colors.$disabled-text,
+                        background-color: colors.$disabled,
+                        border-color: colors.$disabled-border
                 ),
         ),
 );

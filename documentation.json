@@ -206,12 +206,12 @@
         },
         {
             "name": "InputDirective",
-            "id": "directive-InputDirective-430d545f85dd535f6436eedb720dff88",
+            "id": "directive-InputDirective-746169de9ded16a0616635db081483c8",
             "file": "src/components/atoms/forms/input/input.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';\r\nimport { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';\r\nimport { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'input[adrInput]',\r\n  host: {\r\n    class: 'adr-input',\r\n    '[class.adr-focused]': 'focused || null'\r\n  }\r\n})\r\n@AutoUnsubscribe()\r\nexport class InputDirective {\r\n  @HostBinding('attr.value')\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  @CoerceBoolean()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n  private _focused: boolean = false;\r\n\r\n  get focused(): boolean {\r\n    return this._focused;\r\n  }\r\n\r\n  @HostListener('input', ['$event.target.value'])\r\n  public onInput(value: any): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this.valueChange.emit(value);\r\n    }\r\n  }\r\n\r\n  @HostListener('focus', ['true'])\r\n  @HostListener('blur', ['false'])\r\n  public onToggleFocus(focused: boolean): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this._focused = focused;\r\n    }\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';\r\nimport { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';\r\nimport { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'input[adrInput]',\r\n  host: {\r\n    class: 'adr-input',\r\n    '[class.adr-focused]': 'focused || null',\r\n    '[class.adr-readonly]': 'readonly || null',\r\n    '[class.adr-disabled]': 'disabled || null'\r\n  }\r\n})\r\n@AutoUnsubscribe()\r\nexport class InputDirective {\r\n  @HostBinding('attr.value')\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  @HostBinding('readonly')\r\n  @CoerceBoolean()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  @HostBinding('disabled')\r\n  @CoerceBoolean()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n  private _focused: boolean = false;\r\n\r\n  get focused(): boolean {\r\n    return this._focused;\r\n  }\r\n\r\n  @HostListener('input', ['$event.target.value'])\r\n  public onInput(value: any): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this.valueChange.emit(value);\r\n    }\r\n  }\r\n\r\n  @HostListener('focus', ['true'])\r\n  @HostListener('blur', ['false'])\r\n  public onToggleFocus(focused: boolean): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this._focused = focused;\r\n    }\r\n  }\r\n}\r\n",
             "selector": "input[adrInput]",
             "providers": [],
             "inputsClass": [
@@ -220,7 +220,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 24,
+                    "line": 28,
                     "type": "boolean"
                 },
                 {
@@ -228,14 +228,14 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
+                    "line": 23,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
+                    "line": 18,
                     "type": "any"
                 }
             ],
@@ -245,7 +245,7 @@
                     "defaultValue": "new EventEmitter<any>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 27,
+                    "line": 31,
                     "type": "EventEmitter<any>"
                 }
             ],
@@ -268,7 +268,7 @@
                     ],
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 44
+                    "line": 48
                 },
                 {
                     "name": "focus",
@@ -285,7 +285,7 @@
                     ],
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 44
+                    "line": 48
                 },
                 {
                     "name": "input",
@@ -302,7 +302,7 @@
                     ],
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 36
+                    "line": 40
                 }
             ],
             "propertiesClass": [
@@ -314,7 +314,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 29,
+                    "line": 33,
                     "modifierKind": [
                         121
                     ]
@@ -334,7 +334,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 36,
+                    "line": 40,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "decorators": [
@@ -371,7 +371,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 44,
+                    "line": 48,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "decorators": [
@@ -407,7 +407,7 @@
                         "name": "focused",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 31
+                        "line": 35
                     }
                 }
             }
@@ -534,7 +534,7 @@
         },
         {
             "name": "InputComponent",
-            "id": "component-InputComponent-542f7feefd4e2c43ec173100a45015be",
+            "id": "component-InputComponent-b178c486eed612dec750ec6774653438",
             "file": "src/components/atoms/forms/input/input.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -544,7 +544,7 @@
             "selector": "adr-dummy",
             "styleUrls": [],
             "styles": [],
-            "template": "<input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" />",
+            "template": "<input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
@@ -553,7 +553,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 19,
+                    "line": 20,
                     "type": "boolean"
                 },
                 {
@@ -561,18 +561,27 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
+                    "line": 17,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 13,
+                    "line": 14,
                     "type": "any"
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "valueChange",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 23,
+                    "type": "EventEmitter<any>"
+                }
+            ],
             "propertiesClass": [],
             "methodsClass": [],
             "deprecated": false,
@@ -582,7 +591,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" />`\r\n})\r\nclass InputComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  component: InputComponent\r\n} as Meta;\r\n\r\nconst Template: Story<InputComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\n\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, EventEmitter, Input, Output } from '@angular/core';\r\nimport { action } from '@storybook/addon-actions';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />`\r\n})\r\nclass InputComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  component: InputComponent,\r\n  argTypes: {\r\n    value: { control: { type: 'text' } }\r\n  }\r\n} as Meta;\r\n\r\nconst Template: Story<InputComponent> = (args) => ({\r\n  props: { ...args, valueChange: action('log') }, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\n\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": ""
@@ -786,7 +795,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<InputComponent>",
-                "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n})"
+                "defaultValue": "(args) => ({\r\n  props: { ...args, valueChange: action('log') }, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n})"
             }
         ],
         "functions": [
@@ -888,7 +897,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<InputComponent>",
-                    "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n})"
+                    "defaultValue": "(args) => ({\r\n  props: { ...args, valueChange: action('log') }, moduleMetadata: { declarations: [InputDirective], imports: [CommonModule] }\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -1045,7 +1054,7 @@
                 "linktype": "component",
                 "name": "InputComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {

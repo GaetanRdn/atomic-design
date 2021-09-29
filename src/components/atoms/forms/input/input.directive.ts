@@ -6,7 +6,9 @@ import { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decora
   selector: 'input[adrInput]',
   host: {
     class: 'adr-input',
-    '[class.adr-focused]': 'focused || null'
+    '[class.adr-focused]': 'focused || null',
+    '[class.adr-readonly]': 'readonly || null',
+    '[class.adr-disabled]': 'disabled || null'
   }
 })
 @AutoUnsubscribe()

@@ -56,7 +56,7 @@ exports[`InputDirective Basic input when focused then check class on blur 1`] = 
 exports[`InputDirective Disabled input do not emit change 1`] = `
 <input
   adrinput=""
-  class="adr-input"
+  class="adr-input adr-disabled"
   disabled=""
 />
 `;
@@ -64,7 +64,7 @@ exports[`InputDirective Disabled input do not emit change 1`] = `
 exports[`InputDirective Disabled input when focus then check dont have focused class 1`] = `
 <input
   adrinput=""
-  class="adr-input"
+  class="adr-input adr-disabled"
   disabled=""
 />
 `;
@@ -72,7 +72,7 @@ exports[`InputDirective Disabled input when focus then check dont have focused c
 exports[`InputDirective Readonly input do not emit change 1`] = `
 <input
   adrinput=""
-  class="adr-input"
+  class="adr-input adr-readonly"
   readonly=""
 />
 `;
@@ -80,7 +80,7 @@ exports[`InputDirective Readonly input do not emit change 1`] = `
 exports[`InputDirective Readonly input when focus then check dont have focused class 1`] = `
 <input
   adrinput=""
-  class="adr-input"
+  class="adr-input adr-readonly"
   readonly=""
 />
 `;
