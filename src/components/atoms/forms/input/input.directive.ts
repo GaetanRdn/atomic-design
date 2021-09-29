@@ -28,7 +28,7 @@ export class InputDirective {
   public disabled: boolean = false;
 
   @Output()
-  public valueChange: EventEmitter<any> = new EventEmitter<any>();
+  public readonly valueChange: EventEmitter<any> = new EventEmitter<any>();
 
   private _focused: boolean = false;
 
