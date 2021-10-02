@@ -1,5 +1,6 @@
-import { Component, DebugElement, OnDestroy } from '@angular/core';
+import { Component, DebugElement, OnDestroy, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TemplateLookup } from '../../../core/tests/template-lookup';
 import { InputDirective } from './input.directive';
 
@@ -7,7 +8,8 @@ describe('InputDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InputDirective, BasicComponent, ReadonlyComponent, DisabledComponent]
+      declarations: [InputDirective, BasicComponent, ReadonlyComponent, DisabledComponent, FormControlComponent],
+      imports: [ReactiveFormsModule]
     });
   });
 
@@ -156,6 +158,50 @@ describe('InputDirective', () => {
       expect(templateLookup.firstChildElement).toMatchSnapshot();
     });
   });
+
+  describe('ReactiveForm input', () => {
+    let templateLookup: TemplateLookup<FormControlComponent>;
+
+    beforeEach(() => {
+      templateLookup = new TemplateLookup(TestBed.createComponent(FormControlComponent));
+
+      templateLookup.detectChanges();
+    });
+
+    test('should create with formControl', () => {
+      // WHEN
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+      expect(templateLookup.query<HTMLInputElement>(InputDirective).value).toEqual('');
+    });
+
+    test('should set value from formControl', () => {
+      // GIVEN
+      templateLookup.hostComponent.control.setValue('test');
+
+      // WHEN
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+      expect(templateLookup.query<HTMLInputElement>(InputDirective).value).toEqual('test');
+    });
+
+    test('should set value to formControl', async () => {
+      // GIVEN
+      templateLookup.detectChanges();
+
+      // WHEN
+      triggerInputValue(templateLookup, 'toto');
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+      expect(templateLookup.hostComponent.control.value).toEqual('toto');
+    });
+  });
 });
 
 const triggerInputValue = (templateLookup: TemplateLookup<unknown>, value: any): void => {
@@ -183,4 +229,15 @@ class ReadonlyComponent {
 })
 class DisabledComponent {
   public value = null;
+}
+
+@Component({
+  template: `<input adrInput [formControl]="control" />`
+})
+class FormControlComponent implements OnInit {
+  public control: FormControl = new FormControl();
+
+  public ngOnInit(): void {
+    this.control.valueChanges.subscribe((val) => console.log(val));
+  }
 }
