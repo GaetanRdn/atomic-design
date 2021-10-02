@@ -543,7 +543,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-325cc76c10251594732cf019478b4c2e",
+            "id": "component-AppComponent-faa08070edb7191837ca6441e8c46034",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -559,37 +559,8 @@
             "viewProviders": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "control",
-                    "defaultValue": "new FormControl('hey')",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 9,
-                    "modifierKind": [
-                        123,
-                        143
-                    ]
-                }
-            ],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 11,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "modifierKind": [
-                        123
-                    ]
-                }
-            ],
+            "propertiesClass": [],
+            "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -597,14 +568,40 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n  selector: 'adr-root',\r\n  templateUrl: './app.component.html'\r\n})\r\nexport class AppComponent implements OnInit {\r\n  public readonly control = new FormControl('hey');\r\n\r\n  public ngOnInit(): void {\r\n    this.control.valueChanges.subscribe((val) => {\r\n      console.log(val);\r\n    });\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'adr-root',\r\n  templateUrl: './app.component.html',\r\n})\r\nexport class AppComponent {\r\n  get sizes(): ('small' | 'medium' | 'large')[] {\r\n    return ['small', 'medium', 'large'];\r\n  }\r\n\r\n  get outlineds(): boolean [] {\r\n    return [true, false];\r\n  }\r\n\r\n  get colors(): ('primary' | 'accent' | 'warn')[] {\r\n    return ['primary', 'accent', 'warn'];\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<input [formControl]=\"control\" adrInput />\r\n"
+            "accessors": {
+                "sizes": {
+                    "name": "sizes",
+                    "getSignature": {
+                        "name": "sizes",
+                        "type": "[]",
+                        "returnType": "[]",
+                        "line": 8
+                    }
+                },
+                "outlineds": {
+                    "name": "outlineds",
+                    "getSignature": {
+                        "name": "outlineds",
+                        "type": "[]",
+                        "returnType": "boolean[]",
+                        "line": 12
+                    }
+                },
+                "colors": {
+                    "name": "colors",
+                    "getSignature": {
+                        "name": "colors",
+                        "type": "[]",
+                        "returnType": "[]",
+                        "line": 16
+                    }
+                }
+            },
+            "templateData": "<ng-container *ngFor=\"let color of colors\">\r\n    <ng-container *ngFor=\"let outlined of outlineds\">\r\n        <ng-container *ngFor=\"let size of sizes\">\r\n            <button [color]=\"color\" [outlined]=\"outlined\" [size]=\"size\" adrButton>Button</button>\r\n        </ng-container>\r\n    </ng-container>\r\n</ng-container>\r\n"
         },
         {
             "name": "DummyComponent",
@@ -664,14 +661,14 @@
         },
         {
             "name": "InputDummyComponent",
-            "id": "component-InputDummyComponent-9e9ba7d54054fbbd43228dcbd77f237f",
+            "id": "component-InputDummyComponent-d8bb4d1aec9f37ffc2b8ddf3833e17e3",
             "file": "src/components/atoms/forms/input/input.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "adr-dummy",
+            "selector": "adr-input-dummy",
             "styleUrls": [],
             "styles": [],
             "template": "<input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />",
@@ -683,7 +680,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 19,
+                    "line": 21,
                     "type": "boolean"
                 },
                 {
@@ -691,14 +688,14 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
+                    "line": 18,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 13,
+                    "line": 15,
                     "type": "any"
                 }
             ],
@@ -708,7 +705,7 @@
                     "defaultValue": "new EventEmitter<any>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 22,
+                    "line": 24,
                     "type": "EventEmitter<any>"
                 }
             ],
@@ -721,22 +718,161 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\r\nimport { action } from '@storybook/addon-actions';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />`\r\n})\r\nclass InputDummyComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  argTypes: {\r\n    value: { control: { type: 'text' } }\r\n  }\r\n} as Meta;\r\n\r\nconst Template: Story<InputDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n});\r\n\r\nexport const Default = Template.bind({});\r\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\r\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\r\nimport { action } from '@storybook/addon-actions';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { Observable } from 'rxjs';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-input-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />`\r\n})\r\nclass InputDummyComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  argTypes: {\r\n    value: { control: { type: 'text' } }\r\n  }\r\n} as Meta;\r\n\r\nconst BasicTemplate: Story<InputDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n});\r\n\r\nexport const Default = BasicTemplate.bind({});\r\n\r\n/** Reactive forms **/\r\n\r\n@Component({\r\n  selector: 'adr-input-form-dummy',\r\n  template: `\r\n      <input adrInput [readonly]=\"readonly\" [formControl]=\"formControl\" />`\r\n})\r\nclass InputReactiveFormDummyComponent {\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  public formControl: FormControl = new FormControl(this['value']);\r\n\r\n  @Output()\r\n  public formValueChange: Observable<any> = this.formControl.valueChanges;\r\n\r\n  @Input()\r\n  set value(value: any) {\r\n    this.formControl.setValue(value);\r\n  }\r\n\r\n  @Input()\r\n  set disabled(disabled: boolean) {\r\n    disabled ? this.formControl.disable() : this.formControl.enable();\r\n  }\r\n}\r\n\r\nconst ReactiveTemplate: Story<InputReactiveFormDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n});\r\n\r\nexport const ReactiveForm = ReactiveTemplate.bind({});\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": ""
+        },
+        {
+            "name": "InputReactiveFormDummyComponent",
+            "id": "component-InputReactiveFormDummyComponent-d8bb4d1aec9f37ffc2b8ddf3833e17e3",
+            "file": "src/components/atoms/forms/input/input.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "adr-input-form-dummy",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<input adrInput [readonly]=\"readonly\" [formControl]=\"formControl\" />",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 67,
+                    "type": "boolean"
+                },
+                {
+                    "name": "readonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54,
+                    "type": "boolean"
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 62,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "formValueChange",
+                    "defaultValue": "this.formControl.valueChanges",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 59,
+                    "type": "Observable<any>"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "formControl",
+                    "defaultValue": "new FormControl(this['value'])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormControl",
+                    "optional": false,
+                    "description": "",
+                    "line": 56,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "<p>Reactive forms</p>\n",
+            "rawdescription": "\nReactive forms",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\r\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\r\nimport { action } from '@storybook/addon-actions';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { Observable } from 'rxjs';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-input-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />`\r\n})\r\nclass InputDummyComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  argTypes: {\r\n    value: { control: { type: 'text' } }\r\n  }\r\n} as Meta;\r\n\r\nconst BasicTemplate: Story<InputDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n});\r\n\r\nexport const Default = BasicTemplate.bind({});\r\n\r\n/** Reactive forms **/\r\n\r\n@Component({\r\n  selector: 'adr-input-form-dummy',\r\n  template: `\r\n      <input adrInput [readonly]=\"readonly\" [formControl]=\"formControl\" />`\r\n})\r\nclass InputReactiveFormDummyComponent {\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  public formControl: FormControl = new FormControl(this['value']);\r\n\r\n  @Output()\r\n  public formValueChange: Observable<any> = this.formControl.valueChanges;\r\n\r\n  @Input()\r\n  set value(value: any) {\r\n    this.formControl.setValue(value);\r\n  }\r\n\r\n  @Input()\r\n  set disabled(disabled: boolean) {\r\n    disabled ? this.formControl.disable() : this.formControl.enable();\r\n  }\r\n}\r\n\r\nconst ReactiveTemplate: Story<InputReactiveFormDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n});\r\n\r\nexport const ReactiveForm = ReactiveTemplate.bind({});\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 62,
+                        "jsdoctags": [
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "disabled": {
+                    "name": "disabled",
+                    "setSignature": {
+                        "name": "disabled",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "disabled",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 67,
+                        "jsdoctags": [
+                            {
+                                "name": "disabled",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         }
     ],
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-9f9be9261b8966bacbb65d7cc0665fca",
+            "id": "module-AppModule-bf6e0f8dd8950af400e30c81691fc504",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { ReactiveFormsModule } from '@angular/forms';\r\nimport { BrowserModule } from '@angular/platform-browser';\r\nimport { ButtonModule } from 'src/components/atoms/button/button.module';\r\nimport { InputModule } from 'src/components/atoms/forms/input/input.module';\r\nimport { AppComponent } from './app.component';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    AppComponent\r\n  ],\r\n  imports: [\r\n    BrowserModule,\r\n    ButtonModule,\r\n    ReactiveFormsModule,\r\n    InputModule\r\n  ],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule {\r\n}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { BrowserModule } from '@angular/platform-browser';\r\nimport { ButtonModule } from 'src/components/atoms/button/button.module';\r\nimport { AppComponent } from './app.component';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    AppComponent\r\n  ],\r\n  imports: [\r\n    BrowserModule,\r\n    ButtonModule\r\n  ],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule {\r\n}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -755,9 +891,6 @@
                     "elements": [
                         {
                             "name": "ButtonModule"
-                        },
-                        {
-                            "name": "InputModule"
                         }
                     ]
                 },
@@ -871,6 +1004,16 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "BasicTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<InputDummyComponent>",
+                "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n})"
+            },
+            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -888,7 +1031,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "Template.bind({})"
+                "defaultValue": "BasicTemplate.bind({})"
             },
             {
                 "name": "environment",
@@ -911,6 +1054,26 @@
                 "defaultValue": "{\r\n  production: false\r\n}"
             },
             {
+                "name": "ReactiveForm",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "ReactiveTemplate.bind({})"
+            },
+            {
+                "name": "ReactiveTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<InputReactiveFormDummyComponent>",
+                "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n})"
+            },
+            {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -919,16 +1082,6 @@
                 "deprecationMessage": "",
                 "type": "Story<DummyComponent>",
                 "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/components/atoms/forms/input/input.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<InputDummyComponent>",
-                "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n})"
             }
         ],
         "functions": [
@@ -989,6 +1142,48 @@
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
+            "src/components/atoms/forms/input/input.stories.ts": [
+                {
+                    "name": "BasicTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<InputDummyComponent>",
+                    "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n})"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "BasicTemplate.bind({})"
+                },
+                {
+                    "name": "ReactiveForm",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "ReactiveTemplate.bind({})"
+                },
+                {
+                    "name": "ReactiveTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<InputReactiveFormDummyComponent>",
+                    "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n})"
+                }
+            ],
             "src/components/atoms/button/button.stories.ts": [
                 {
                     "name": "Default",
@@ -1009,28 +1204,6 @@
                     "deprecationMessage": "",
                     "type": "Story<DummyComponent>",
                     "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
-                }
-            ],
-            "src/components/atoms/forms/input/input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/components/atoms/forms/input/input.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/components/atoms/forms/input/input.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<InputDummyComponent>",
-                    "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -1122,7 +1295,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 7,
+        "count": 6,
         "status": "low",
         "files": [
             {
@@ -1131,7 +1304,7 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -1192,6 +1365,25 @@
             },
             {
                 "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "InputReactiveFormDummyComponent",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BasicTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1205,7 +1397,17 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Template",
+                "name": "ReactiveForm",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ReactiveTemplate",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
