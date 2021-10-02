@@ -65,6 +65,7 @@ export class InputDirective implements ControlValueAccessor {
   public onToggleFocus(focused: boolean): void {
     if (!this.readonly && !this.disabled) {
       this._focused = focused;
+      this._onTouched();
     }
   }
 

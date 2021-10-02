@@ -1,4 +1,4 @@
-import { Component, DebugElement, OnDestroy, OnInit } from '@angular/core';
+import { Component, DebugElement, OnDestroy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TemplateLookup } from '../../../core/tests/template-lookup';
@@ -201,6 +201,19 @@ describe('InputDirective', () => {
       expect(templateLookup.firstChildElement).toMatchSnapshot();
       expect(templateLookup.hostComponent.control.value).toEqual('toto');
     });
+
+    test('check class on focus', () => {
+      // GIVEN
+      templateLookup.detectChanges();
+
+      // WHEN
+      let input: DebugElement = templateLookup.get('input');
+      input.triggerEventHandler('focus', input.nativeElement);
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
   });
 });
 
@@ -234,10 +247,6 @@ class DisabledComponent {
 @Component({
   template: `<input adrInput [formControl]="control" />`
 })
-class FormControlComponent implements OnInit {
+class FormControlComponent {
   public control: FormControl = new FormControl();
-
-  public ngOnInit(): void {
-    this.control.valueChanges.subscribe((val) => console.log(val));
-  }
 }
