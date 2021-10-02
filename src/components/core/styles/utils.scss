@@ -1,0 +1,7 @@
+@mixin get-color-values($config, $color) {
+  $colors: map-get(map-get($config, colors), $color);
+
+  color: map-get($colors, color);
+  background-color: map-get($colors, background-color);
+  border-color: map-get($colors, border-color);
+}

@@ -1,5 +1,7 @@
 @use 'src/components/atoms/button/button';
+@use 'src/components/atoms/forms/input/input';
 
 @mixin ad-theme($config) {
   @include button.adr-button($config);
+  @include input.adr-input($config);
 }

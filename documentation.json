@@ -4,7 +4,162 @@
     "injectables": [],
     "guards": [],
     "interceptors": [],
-    "classes": [],
+    "classes": [
+        {
+            "name": "TemplateLookup",
+            "id": "class-TemplateLookup-0d23998e8e09b4f4b705afa207028be5",
+            "file": "src/components/core/tests/template-lookup.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "import { DebugElement, Predicate, Type } from '@angular/core';\r\nimport { ComponentFixture } from '@angular/core/testing';\r\nimport { By } from '@angular/platform-browser';\r\n\r\nexport class TemplateLookup<T> {\r\n  get firstChildElement(): HTMLElement {\r\n    return this.fixture.debugElement.children[0].nativeElement;\r\n  }\r\n\r\n  get hostComponent(): T {\r\n    return this.fixture.componentInstance;\r\n  }\r\n\r\n  constructor(public readonly fixture: ComponentFixture<T>) {\r\n  }\r\n\r\n  public detectChanges(): void {\r\n    this.fixture.detectChanges();\r\n  }\r\n\r\n  public get(selectorOrType: string | Type<any>): DebugElement {\r\n    let predicate: Predicate<DebugElement>;\r\n\r\n    if (typeof selectorOrType === 'string') {\r\n      predicate = By.css(selectorOrType);\r\n    } else {\r\n      predicate = By.directive(selectorOrType);\r\n    }\r\n\r\n    return this.fixture.debugElement.query(predicate);\r\n  }\r\n\r\n  public query<T extends HTMLElement>(selectorOrType: string | Type<any>): T {\r\n    return this.get(selectorOrType).nativeElement;\r\n  }\r\n}\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "fixture",
+                        "type": "ComponentFixture<T>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "fixture",
+                        "type": "ComponentFixture<T>",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "fixture",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ComponentFixture<T>",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "modifierKind": [
+                        123,
+                        143
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "detectChanges",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "get",
+                    "args": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "DebugElement",
+                    "typeParameters": [],
+                    "line": 21,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "query",
+                    "args": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "T",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "line": 33,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "selectorOrType",
+                            "type": "string | Type<any>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "accessors": {
+                "firstChildElement": {
+                    "name": "firstChildElement",
+                    "getSignature": {
+                        "name": "firstChildElement",
+                        "type": "",
+                        "returnType": "HTMLElement",
+                        "line": 6
+                    }
+                },
+                "hostComponent": {
+                    "name": "hostComponent",
+                    "getSignature": {
+                        "name": "hostComponent",
+                        "type": "",
+                        "returnType": "T",
+                        "line": 10
+                    }
+                }
+            },
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
     "directives": [
         {
             "name": "ButtonDirective",
@@ -48,6 +203,341 @@
             "hostListeners": [],
             "propertiesClass": [],
             "methodsClass": []
+        },
+        {
+            "name": "InputDirective",
+            "id": "directive-InputDirective-9f98bcb8c7b705dc83851551260203c9",
+            "file": "src/components/atoms/forms/input/input.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';\r\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\r\nimport { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';\r\nimport { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'input[adrInput]',\r\n  host: {\r\n    class: 'adr-input',\r\n    '[class.adr-focused]': 'focused || null',\r\n    '[class.adr-readonly]': 'readonly || null',\r\n    '[class.adr-disabled]': 'disabled || null'\r\n  },\r\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: InputDirective, multi: true }]\r\n})\r\n@AutoUnsubscribe()\r\nexport class InputDirective implements ControlValueAccessor {\r\n  @HostBinding('attr.value')\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  @HostBinding('readonly')\r\n  @CoerceBoolean()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  @HostBinding('disabled')\r\n  @CoerceBoolean()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public readonly valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n  private _focused: boolean = false;\r\n\r\n  get focused(): boolean {\r\n    return this._focused;\r\n  }\r\n\r\n  public writeValue(value: any): void {\r\n    this.value = value;\r\n  }\r\n\r\n  public registerOnChange(fn: any): void {\r\n    this._onChange = fn;\r\n  }\r\n\r\n  public registerOnTouched(fn: any): void {\r\n    this._onTouched = fn;\r\n  }\r\n\r\n  @HostListener('input', ['$event.target.value'])\r\n  public onInput(value: any): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this.value = value;\r\n      this.valueChange.emit(value);\r\n      this._onChange(value);\r\n      this._onTouched();\r\n    }\r\n  }\r\n\r\n  @HostListener('focus', ['true'])\r\n  @HostListener('blur', ['false'])\r\n  public onToggleFocus(focused: boolean): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this._focused = focused;\r\n    }\r\n  }\r\n\r\n  protected _onChange = (_: any): void => {\r\n  };\r\n\r\n  protected _onTouched = (): void => {\r\n  };\r\n}\r\n",
+            "selector": "input[adrInput]",
+            "providers": [
+                {
+                    "name": "{ provide: NG_VALUE_ACCESSOR, useExisting: InputDirective, multi: true }",
+                    "type": "directive"
+                }
+            ],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 30,
+                    "type": "boolean"
+                },
+                {
+                    "name": "readonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 25,
+                    "type": "boolean"
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 20,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "valueChange",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 33,
+                    "type": "EventEmitter<any>"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [
+                {
+                    "name": "blur",
+                    "args": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "false"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 65
+                },
+                {
+                    "name": "focus",
+                    "args": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "true"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 65
+                },
+                {
+                    "name": "input",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "$event.target.value"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "_focused",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 35,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "_onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 71,
+                    "modifierKind": [
+                        122
+                    ]
+                },
+                {
+                    "name": "_onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 74,
+                    "modifierKind": [
+                        122
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onInput",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "decorators": [
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'input', ['$event.target.value']"
+                        }
+                    ],
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onToggleFocus",
+                    "args": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 65,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "decorators": [
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'focus', ['true']"
+                        },
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'blur', ['false']"
+                        }
+                    ],
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "focused",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 45,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 49,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 41,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "implements": [
+                "ControlValueAccessor"
+            ],
+            "accessors": {
+                "focused": {
+                    "name": "focused",
+                    "getSignature": {
+                        "name": "focused",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 37
+                    }
+                }
+            }
         }
     ],
     "components": [
@@ -115,7 +605,7 @@
         },
         {
             "name": "DummyComponent",
-            "id": "component-DummyComponent-a3d70ba654b354b13131004f92560b5b",
+            "id": "component-DummyComponent-5ef2468e3de3fcdef9d94c8b72b949c0",
             "file": "src/components/atoms/button/button.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -131,6 +621,7 @@
             "inputsClass": [
                 {
                     "name": "color",
+                    "defaultValue": "'primary'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 19,
@@ -163,10 +654,213 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { ButtonDirective } from 'src/components/atoms/button/button.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <button adrButton [size]=\"size\" [outlined]=\"outlined\" [color]=\"color\">Click</button>`\r\n})\r\nclass DummyComponent {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  public outlined: boolean = false;\r\n\r\n  @Input()\r\n  public color?: 'primary' | 'accent' | 'warn';\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/button',\r\n  component: DummyComponent\r\n} as Meta;\r\n\r\nconst Template: Story<DummyComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\nDefault.args = {};\r\n\r\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input } from '@angular/core';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { ButtonDirective } from 'src/components/atoms/button/button.directive';\r\n\r\n@Component({\r\n  selector: 'adr-dummy',\r\n  template: `\r\n      <button adrButton [size]=\"size\" [outlined]=\"outlined\" [color]=\"color\">Click</button>`\r\n})\r\nclass DummyComponent {\r\n  @Input()\r\n  public size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  @Input()\r\n  public outlined: boolean = false;\r\n\r\n  @Input()\r\n  public color: 'primary' | 'accent' | 'warn' = 'primary';\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/button',\r\n  component: DummyComponent\r\n} as Meta;\r\n\r\nconst Template: Story<DummyComponent> = (args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n});\r\n\r\nexport const Default = Template.bind({});\r\n\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": ""
+        },
+        {
+            "name": "InputDummyComponent",
+            "id": "component-InputDummyComponent-d8bb4d1aec9f37ffc2b8ddf3833e17e3",
+            "file": "src/components/atoms/forms/input/input.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "adr-input-dummy",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 21,
+                    "type": "boolean"
+                },
+                {
+                    "name": "readonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 18,
+                    "type": "boolean"
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "valueChange",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "EventEmitter<any>"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\r\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\r\nimport { action } from '@storybook/addon-actions';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { Observable } from 'rxjs';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-input-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />`\r\n})\r\nclass InputDummyComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  argTypes: {\r\n    value: { control: { type: 'text' } }\r\n  }\r\n} as Meta;\r\n\r\nconst BasicTemplate: Story<InputDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n});\r\n\r\nexport const Default = BasicTemplate.bind({});\r\n\r\n/** Reactive forms **/\r\n\r\n@Component({\r\n  selector: 'adr-input-form-dummy',\r\n  template: `\r\n      <input adrInput [readonly]=\"readonly\" [formControl]=\"formControl\" />`\r\n})\r\nclass InputReactiveFormDummyComponent {\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  public formControl: FormControl = new FormControl(this['value']);\r\n\r\n  @Output()\r\n  public formValueChange: Observable<any> = this.formControl.valueChanges;\r\n\r\n  @Input()\r\n  set value(value: any) {\r\n    this.formControl.setValue(value);\r\n  }\r\n\r\n  @Input()\r\n  set disabled(disabled: boolean) {\r\n    disabled ? this.formControl.disable() : this.formControl.enable();\r\n  }\r\n}\r\n\r\nconst ReactiveTemplate: Story<InputReactiveFormDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n});\r\n\r\nexport const ReactiveForm = ReactiveTemplate.bind({});\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ""
+        },
+        {
+            "name": "InputReactiveFormDummyComponent",
+            "id": "component-InputReactiveFormDummyComponent-d8bb4d1aec9f37ffc2b8ddf3833e17e3",
+            "file": "src/components/atoms/forms/input/input.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "adr-input-form-dummy",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<input adrInput [readonly]=\"readonly\" [formControl]=\"formControl\" />",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 67,
+                    "type": "boolean"
+                },
+                {
+                    "name": "readonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54,
+                    "type": "boolean"
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 62,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "formValueChange",
+                    "defaultValue": "this.formControl.valueChanges",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 59,
+                    "type": "Observable<any>"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "formControl",
+                    "defaultValue": "new FormControl(this['value'])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormControl",
+                    "optional": false,
+                    "description": "",
+                    "line": 56,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "<p>Reactive forms</p>\n",
+            "rawdescription": "\nReactive forms",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\r\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\r\nimport { action } from '@storybook/addon-actions';\r\nimport { Meta, Story } from '@storybook/angular';\r\nimport { Observable } from 'rxjs';\r\nimport { InputDirective } from 'src/components/atoms/forms/input/input.directive';\r\n\r\n@Component({\r\n  selector: 'adr-input-dummy',\r\n  template: `\r\n      <input adrInput [disabled]=\"disabled\" [readonly]=\"readonly\" [value]=\"value\" (valueChange)=\"valueChange.emit($event)\" />`\r\n})\r\nclass InputDummyComponent {\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  @Input()\r\n  public disabled: boolean = false;\r\n\r\n  @Output()\r\n  public valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n}\r\n\r\nexport default {\r\n  title: 'atoms/forms/input',\r\n  argTypes: {\r\n    value: { control: { type: 'text' } }\r\n  }\r\n} as Meta;\r\n\r\nconst BasicTemplate: Story<InputDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n});\r\n\r\nexport const Default = BasicTemplate.bind({});\r\n\r\n/** Reactive forms **/\r\n\r\n@Component({\r\n  selector: 'adr-input-form-dummy',\r\n  template: `\r\n      <input adrInput [readonly]=\"readonly\" [formControl]=\"formControl\" />`\r\n})\r\nclass InputReactiveFormDummyComponent {\r\n  @Input()\r\n  public readonly: boolean = false;\r\n\r\n  public formControl: FormControl = new FormControl(this['value']);\r\n\r\n  @Output()\r\n  public formValueChange: Observable<any> = this.formControl.valueChanges;\r\n\r\n  @Input()\r\n  set value(value: any) {\r\n    this.formControl.setValue(value);\r\n  }\r\n\r\n  @Input()\r\n  set disabled(disabled: boolean) {\r\n    disabled ? this.formControl.disable() : this.formControl.enable();\r\n  }\r\n}\r\n\r\nconst ReactiveTemplate: Story<InputReactiveFormDummyComponent> = (args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n});\r\n\r\nexport const ReactiveForm = ReactiveTemplate.bind({});\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 62,
+                        "jsdoctags": [
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "disabled": {
+                    "name": "disabled",
+                    "setSignature": {
+                        "name": "disabled",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "disabled",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 67,
+                        "jsdoctags": [
+                            {
+                                "name": "disabled",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         }
     ],
     "modules": [
@@ -261,10 +955,64 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "InputModule",
+            "id": "module-InputModule-5616db285f231b704141810e7313d917",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/atoms/forms/input/input.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { InputDirective } from './input.directive';\r\n\r\n\r\n\r\n@NgModule({\r\n  declarations: [\r\n    InputDirective\r\n  ],\r\n  imports: [\r\n    CommonModule\r\n  ],\r\n  exports: [\r\n    InputDirective\r\n  ]\r\n})\r\nexport class InputModule { }\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "InputDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "InputDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
         "variables": [
+            {
+                "name": "BasicTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<InputDummyComponent>",
+                "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n})"
+            },
             {
                 "name": "Default",
                 "ctype": "miscellaneous",
@@ -274,6 +1022,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "BasicTemplate.bind({})"
             },
             {
                 "name": "environment",
@@ -296,6 +1054,26 @@
                 "defaultValue": "{\r\n  production: false\r\n}"
             },
             {
+                "name": "ReactiveForm",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "ReactiveTemplate.bind({})"
+            },
+            {
+                "name": "ReactiveTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<InputReactiveFormDummyComponent>",
+                "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n})"
+            },
+            {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -307,6 +1085,49 @@
             }
         ],
         "functions": [
+            {
+                "name": "AutoUnsubscribe",
+                "file": "src/components/core/common/auto-unsubscribe.decorator.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Allows to auto unsubscribe from Observables.</p>\n<p>Automatically check if a (_)subscriptions property exist (must be a Subscription[]), if yes then unsubscribe all.\nAutomatically check this properties, all one which are Observable and is not in the excludeProps is unsubscribe.</p>\n",
+                "args": [
+                    {
+                        "name": "excludeProps",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "[]"
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 307,
+                            "end": 319,
+                            "flags": 4194304,
+                            "modifierFlagsCache": 0,
+                            "transformFlags": 0,
+                            "kind": 79,
+                            "escapedText": "excludeProps"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "[]",
+                        "tagName": {
+                            "pos": 301,
+                            "end": 306,
+                            "flags": 4194304,
+                            "modifierFlagsCache": 0,
+                            "transformFlags": 0,
+                            "kind": 79,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>list of properties to exclude</p>\n"
+                    }
+                ]
+            },
             {
                 "name": "CoerceBoolean",
                 "file": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
@@ -321,6 +1142,48 @@
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
+            "src/components/atoms/forms/input/input.stories.ts": [
+                {
+                    "name": "BasicTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<InputDummyComponent>",
+                    "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] },\r\n  component: InputDummyComponent\r\n})"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "BasicTemplate.bind({})"
+                },
+                {
+                    "name": "ReactiveForm",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "ReactiveTemplate.bind({})"
+                },
+                {
+                    "name": "ReactiveTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<InputReactiveFormDummyComponent>",
+                    "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    formValueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective], imports: [ReactiveFormsModule] },\r\n  component: InputReactiveFormDummyComponent\r\n})"
+                }
+            ],
             "src/components/atoms/button/button.stories.ts": [
                 {
                     "name": "Default",
@@ -369,6 +1232,51 @@
             ]
         },
         "groupedFunctions": {
+            "src/components/core/common/auto-unsubscribe.decorator.ts": [
+                {
+                    "name": "AutoUnsubscribe",
+                    "file": "src/components/core/common/auto-unsubscribe.decorator.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Allows to auto unsubscribe from Observables.</p>\n<p>Automatically check if a (_)subscriptions property exist (must be a Subscription[]), if yes then unsubscribe all.\nAutomatically check this properties, all one which are Observable and is not in the excludeProps is unsubscribe.</p>\n",
+                    "args": [
+                        {
+                            "name": "excludeProps",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "[]"
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 307,
+                                "end": 319,
+                                "flags": 4194304,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "excludeProps"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "[]",
+                            "tagName": {
+                                "pos": 301,
+                                "end": 306,
+                                "flags": 4194304,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>list of properties to exclude</p>\n"
+                        }
+                    ]
+                }
+            ],
             "src/components/core/common/coerce-boolean-inputs.decorator.ts": [
                 {
                     "name": "CoerceBoolean",
@@ -387,7 +1295,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 0,
+        "count": 6,
         "status": "low",
         "files": [
             {
@@ -438,6 +1346,83 @@
                 "status": "low"
             },
             {
+                "filePath": "src/components/atoms/forms/input/input.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "InputDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/16",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "InputDummyComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "InputReactiveFormDummyComponent",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BasicTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ReactiveForm",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ReactiveTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/common/auto-unsubscribe.decorator.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "AutoUnsubscribe",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
                 "filePath": "src/components/core/common/coerce-boolean-inputs.decorator.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
@@ -445,6 +1430,15 @@
                 "name": "CoerceBoolean",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/tests/template-lookup.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "TemplateLookup",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {
