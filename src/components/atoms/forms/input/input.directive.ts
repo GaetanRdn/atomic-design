@@ -24,13 +24,21 @@ export class InputDirective implements ControlValueAccessor {
   @CoerceBoolean()
   public readonly: boolean = false;
 
-  @Input()
-  @HostBinding('disabled')
-  @CoerceBoolean()
-  public disabled: boolean = false;
-
   @Output()
   public readonly valueChange: EventEmitter<any> = new EventEmitter<any>();
+
+  @CoerceBoolean()
+  private _disabled: boolean = false;
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  @Input()
+  @HostBinding('disabled')
+  set disabled(disabled) {
+    this._disabled = disabled;
+  }
 
   private _focused: boolean = false;
 
@@ -48,6 +56,10 @@ export class InputDirective implements ControlValueAccessor {
 
   public registerOnTouched(fn: any): void {
     this._onTouched = fn;
+  }
+
+  public setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
   }
 
   @HostListener('input', ['$event.target.value'])

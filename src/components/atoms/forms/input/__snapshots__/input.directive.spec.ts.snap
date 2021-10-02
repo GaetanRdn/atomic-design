@@ -107,6 +107,14 @@ exports[`InputDirective ReactiveForm input should set value to formControl 1`] =
 />
 `;
 
+exports[`InputDirective ReactiveForm input when control is disabled then check 1`] = `
+<input
+  adrinput=""
+  class="adr-input ng-untouched ng-pristine adr-disabled"
+  disabled=""
+/>
+`;
+
 exports[`InputDirective Readonly input do not emit change 1`] = `
 <input
   adrinput=""
