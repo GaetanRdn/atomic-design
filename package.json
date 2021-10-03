@@ -24,6 +24,9 @@
     ],
     "testEnvironment": "jsdom",
     "collectCoverage": true,
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
     "snapshotSerializers": [
       "jest-preset-angular/build/serializers/html-comment",
       "jest-preset-angular/build/serializers/ng-snapshot",
