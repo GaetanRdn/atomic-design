@@ -1,6 +1,48 @@
 {
     "pipes": [],
-    "interfaces": [],
+    "interfaces": [
+        {
+            "name": "LoggerParams",
+            "id": "interface-LoggerParams-2b40551ebdfdda2896633efea6c591bb",
+            "file": "src/components/core/common/log.decorator.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "interface LoggerParams {\r\n  type?: 'log' | 'trace' | 'warn' | 'info' | 'debug';\r\n  inputs?: boolean;\r\n  outputs?: boolean;\r\n}\r\n\r\nconst defaultParams: Required<LoggerParams> = {\r\n  type: 'debug',\r\n  inputs: true,\r\n  outputs: true,\r\n};\r\n\r\nexport function Log(params?: LoggerParams) {\r\n  const options: Required<LoggerParams> = {\r\n    type: params?.type || defaultParams.type,\r\n    inputs: params?.inputs === undefined ? defaultParams.inputs : params.inputs,\r\n    outputs: params?.outputs === undefined ? defaultParams.outputs : params.outputs,\r\n  };\r\n\r\n  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {\r\n    const original = descriptor.value;\r\n\r\n    descriptor.value = function(...args: any[]) {\r\n      if (options.inputs) {\r\n        console[options.type]('Logged inputs:', args);\r\n      }\r\n\r\n      const result = original.apply(this, args);\r\n\r\n      if (options.outputs) {\r\n        console[options.type]('Logged outputs', result);\r\n      }\r\n\r\n      return result;\r\n    };\r\n  };\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "inputs",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "outputs",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "type",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "\"log\" | \"trace\" | \"warn\" | \"info\" | \"debug\"",
+                    "optional": true,
+                    "description": "",
+                    "line": 2
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 164,
+            "methods": []
+        }
+    ],
     "injectables": [],
     "guards": [],
     "interceptors": [],
@@ -206,12 +248,12 @@
         },
         {
             "name": "InputDirective",
-            "id": "directive-InputDirective-18e59ede513a2aefad49e5adf88ea586",
+            "id": "directive-InputDirective-ca6d9fbf0551c3ee568e59c3d297374f",
             "file": "src/components/atoms/forms/input/input.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';\r\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\r\nimport { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';\r\nimport { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'input[adrInput]',\r\n  host: {\r\n    class: 'adr-input',\r\n    '[class.adr-focused]': 'focused || null',\r\n    '[class.adr-readonly]': 'readonly || null',\r\n    '[class.adr-disabled]': 'disabled || null'\r\n  },\r\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: InputDirective, multi: true }]\r\n})\r\n@AutoUnsubscribe()\r\nexport class InputDirective implements ControlValueAccessor {\r\n  @HostBinding('attr.value')\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  @HostBinding('readonly')\r\n  @CoerceBoolean()\r\n  public readonly: boolean = false;\r\n\r\n  @Output()\r\n  public readonly valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n  @CoerceBoolean()\r\n  private _disabled: boolean = false;\r\n\r\n  get disabled(): boolean {\r\n    return this._disabled;\r\n  }\r\n\r\n  @Input()\r\n  @HostBinding('disabled')\r\n  set disabled(disabled) {\r\n    this._disabled = disabled;\r\n  }\r\n\r\n  private _focused: boolean = false;\r\n\r\n  get focused(): boolean {\r\n    return this._focused;\r\n  }\r\n\r\n  public writeValue(value: any): void {\r\n    this.value = value;\r\n  }\r\n\r\n  public registerOnChange(fn: any): void {\r\n    this._onChange = fn;\r\n  }\r\n\r\n  public registerOnTouched(fn: any): void {\r\n    this._onTouched = fn;\r\n  }\r\n\r\n  public setDisabledState(disabled: boolean): void {\r\n    this.disabled = disabled;\r\n  }\r\n\r\n  @HostListener('input', ['$event.target.value'])\r\n  public onInput(value: any): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this.value = value;\r\n      this.valueChange.emit(value);\r\n      this._onChange(value);\r\n      this._onTouched();\r\n    }\r\n  }\r\n\r\n  @HostListener('focus', ['true'])\r\n  @HostListener('blur', ['false'])\r\n  public onToggleFocus(focused: boolean): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this._focused = focused;\r\n      this._onTouched();\r\n    }\r\n  }\r\n\r\n  protected _onChange = (_: any): void => {\r\n  };\r\n\r\n  protected _onTouched = (): void => {\r\n  };\r\n}\r\n",
+            "sourceCode": "import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';\r\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\r\nimport { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';\r\nimport { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';\r\n\r\n@Directive({\r\n  selector: 'input[adrInput]',\r\n  host: {\r\n    class: 'adr-input',\r\n    '[class.adr-focused]': 'focused || null',\r\n    '[class.adr-readonly]': 'readonly || null',\r\n    '[class.adr-disabled]': 'disabled || null'\r\n  },\r\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: InputDirective, multi: true }]\r\n})\r\n@AutoUnsubscribe()\r\nexport class InputDirective implements ControlValueAccessor {\r\n  @HostBinding('attr.value')\r\n  @Input()\r\n  public value: any;\r\n\r\n  @Input()\r\n  @HostBinding('readonly')\r\n  @CoerceBoolean()\r\n  public readonly: boolean = false;\r\n\r\n  @Output()\r\n  public readonly valueChange: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n  private _disabled: boolean = false;\r\n\r\n  get disabled(): boolean {\r\n    return this._disabled;\r\n  }\r\n\r\n  @Input()\r\n  @HostBinding('disabled')\r\n  @CoerceBoolean()\r\n  set disabled(disabled) {\r\n    this._disabled = disabled;\r\n  }\r\n\r\n  private _focused: boolean = false;\r\n\r\n  get focused(): boolean {\r\n    return this._focused;\r\n  }\r\n\r\n  public writeValue(value: any): void {\r\n    this.value = value;\r\n  }\r\n\r\n  public registerOnChange(fn: any): void {\r\n    this._onChange = fn;\r\n  }\r\n\r\n  public registerOnTouched(fn: any): void {\r\n    this._onTouched = fn;\r\n  }\r\n\r\n  public setDisabledState(disabled: boolean): void {\r\n    this.disabled = disabled;\r\n  }\r\n\r\n  @HostListener('input', ['$event.target.value'])\r\n  public onInput(value: any): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this.value = value;\r\n      this.valueChange.emit(value);\r\n      this._onChange(value);\r\n      this._onTouched();\r\n    }\r\n  }\r\n\r\n  @HostListener('focus', ['true'])\r\n  @HostListener('blur', ['false'])\r\n  public onToggleFocus(focused: boolean): void {\r\n    if (!this.readonly && !this.disabled) {\r\n      this._focused = focused;\r\n      this._onTouched();\r\n    }\r\n  }\r\n\r\n  protected _onChange = (_: any): void => {\r\n  };\r\n\r\n  protected _onTouched = (): void => {\r\n  };\r\n}\r\n",
             "selector": "input[adrInput]",
             "providers": [
                 {
@@ -318,13 +360,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 31,
-                    "decorators": [
-                        {
-                            "name": "CoerceBoolean",
-                            "stringifiedArguments": ""
-                        }
-                    ],
+                    "line": 30,
                     "modifierKind": [
                         121
                     ]
@@ -610,7 +646,7 @@
                         "name": "disabled",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 33
+                        "line": 32
                     }
                 },
                 "focused": {
@@ -807,6 +843,37 @@
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": ""
+        },
+        {
+            "name": "LabelComponent",
+            "id": "component-LabelComponent-cfa6a402db3cc5c7593efe732656b994",
+            "file": "src/components/atoms/forms/label/label.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "adr-label",
+            "styleUrls": [],
+            "styles": [],
+            "template": "toto",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'adr-label',\n  template: `toto`\n})\nexport class LabelComponent {\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ""
         }
     ],
     "modules": [
@@ -945,6 +1012,46 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "LabelModule",
+            "id": "module-LabelModule-59cfd0e32fa56c2693d4e8a4617d0eca",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/atoms/forms/label/label.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { LabelComponent } from './label.component';\n\n\n\n@NgModule({\n  declarations: [\n    LabelComponent\n  ],\n  imports: [\n    CommonModule\n  ]\n})\nexport class LabelModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "LabelComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -958,6 +1065,16 @@
                 "deprecationMessage": "",
                 "type": "Story<InputDummyComponent>",
                 "defaultValue": "(args) => ({\r\n  props: {\r\n    ...args,\r\n    valueChange: action('log')\r\n  },\r\n  moduleMetadata: { declarations: [InputDirective] }\r\n})"
+            },
+            {
+                "name": "BasicTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/label/label.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<LabelComponent>",
+                "defaultValue": "() => ({\n  moduleMetadata: { declarations: [InputDirective] },\n})"
             },
             {
                 "name": "Default",
@@ -978,6 +1095,26 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "BasicTemplate.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/atoms/forms/label/label.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "BasicTemplate.bind({})"
+            },
+            {
+                "name": "defaultParams",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/core/common/log.decorator.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Required<LoggerParams>",
+                "defaultValue": "{\r\n  type: 'debug',\r\n  inputs: true,\r\n  outputs: true,\r\n}"
             },
             {
                 "name": "environment",
@@ -1063,6 +1200,36 @@
                 "deprecationMessage": "",
                 "description": "",
                 "args": []
+            },
+            {
+                "name": "Log",
+                "file": "src/components/core/common/log.decorator.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "params",
+                        "type": "LoggerParams",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "optional": true
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "params",
+                        "type": "LoggerParams",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "optional": true,
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             }
         ],
         "typealiases": [],
@@ -1090,6 +1257,28 @@
                     "defaultValue": "BasicTemplate.bind({})"
                 }
             ],
+            "src/components/atoms/forms/label/label.stories.ts": [
+                {
+                    "name": "BasicTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/label/label.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<LabelComponent>",
+                    "defaultValue": "() => ({\n  moduleMetadata: { declarations: [InputDirective] },\n})"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/atoms/forms/label/label.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "BasicTemplate.bind({})"
+                }
+            ],
             "src/components/atoms/button/button.stories.ts": [
                 {
                     "name": "Default",
@@ -1110,6 +1299,18 @@
                     "deprecationMessage": "",
                     "type": "Story<DummyComponent>",
                     "defaultValue": "(args) => ({\r\n  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }\r\n})"
+                }
+            ],
+            "src/components/core/common/log.decorator.ts": [
+                {
+                    "name": "defaultParams",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/core/common/log.decorator.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Required<LoggerParams>",
+                    "defaultValue": "{\r\n  type: 'debug',\r\n  inputs: true,\r\n  outputs: true,\r\n}"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -1194,6 +1395,38 @@
                     "description": "",
                     "args": []
                 }
+            ],
+            "src/components/core/common/log.decorator.ts": [
+                {
+                    "name": "Log",
+                    "file": "src/components/core/common/log.decorator.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "params",
+                            "type": "LoggerParams",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "params",
+                            "type": "LoggerParams",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
             ]
         },
         "groupedEnumerations": {},
@@ -1201,7 +1434,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 7,
+        "count": 5,
         "status": "low",
         "files": [
             {
@@ -1290,6 +1523,35 @@
                 "status": "low"
             },
             {
+                "filePath": "src/components/atoms/forms/label/label.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "LabelComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/label/label.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BasicTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/atoms/forms/label/label.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/components/core/common/auto-unsubscribe.decorator.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
@@ -1305,6 +1567,35 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
                 "name": "CoerceBoolean",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/common/log.decorator.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "LoggerParams",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/common/log.decorator.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "Log",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/core/common/log.decorator.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultParams",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

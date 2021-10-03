@@ -5,3 +5,11 @@
   background-color: map-get($colors, background-color);
   border-color: map-get($colors, border-color);
 }
+
+@mixin set-typography($config, $typo) {
+  $typo-config: map-get(map-get($config, typography), $typo);
+
+  font-size: map-get($typo-config, font-size);
+  font-family: map-get($typo-config, font-family);
+  font-weight: map-get($typo-config, font-weight);
+}
