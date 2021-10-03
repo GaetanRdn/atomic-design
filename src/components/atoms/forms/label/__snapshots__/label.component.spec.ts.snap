@@ -2,7 +2,7 @@
 
 exports[`LabelComponent should create with content test 1`] = `
 <adr-label>
-  toto
+  test
 </adr-label>
 `;
 
