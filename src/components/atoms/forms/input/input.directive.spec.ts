@@ -5,7 +5,6 @@ import { TemplateLookup } from '../../../core/tests/template-lookup';
 import { InputDirective } from './input.directive';
 
 describe('InputDirective', () => {
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [InputDirective, BasicComponent, ReadonlyComponent, DisabledComponent, FormControlComponent],
