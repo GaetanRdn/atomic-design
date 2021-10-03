@@ -27,7 +27,6 @@ export class InputDirective implements ControlValueAccessor {
   @Output()
   public readonly valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @CoerceBoolean()
   private _disabled: boolean = false;
 
   get disabled(): boolean {
@@ -36,6 +35,7 @@ export class InputDirective implements ControlValueAccessor {
 
   @Input()
   @HostBinding('disabled')
+  @CoerceBoolean()
   set disabled(disabled) {
     this._disabled = disabled;
   }
