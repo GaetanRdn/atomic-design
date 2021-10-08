@@ -4,7 +4,7 @@ import { LabelComponent } from "src/components/atoms/forms/label/label.component
 export default {
   title: "atoms/forms/label",
   component: LabelComponent,
-} as Meta;
+} as Meta<LabelComponent>;
 
 const BasicTemplate: Story<LabelComponent> = (args) => ({
   template: `<adr-label>{{ ngContent }}</adr-label>`,

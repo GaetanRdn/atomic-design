@@ -1,21 +1,21 @@
 import { Component, OnDestroy } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { CheckboxDirective } from "src/components/atoms/forms/checkbox/checkbox.directive";
+import { CheckboxComponent } from "src/components/atoms/forms/checkbox/checkbox.component";
 import { TemplateLookup } from "src/components/core/tests/template-lookup";
 
-describe("CheckboxDirective", () => {
+describe("CheckboxComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CheckboxDirective,
+        CheckboxComponent,
         BasicHostComponent,
         ReadonlyHostComponent,
         DisabledHostComponent,
         ReactiveFormHostComponent,
       ],
       imports: [ReactiveFormsModule],
-      providers: [CheckboxDirective],
+      providers: [CheckboxComponent],
     });
   });
 
@@ -50,7 +50,7 @@ describe("CheckboxDirective", () => {
       templateLookup.detectChanges();
 
       // WHEN
-      templateLookup.query<HTMLInputElement>("input").click();
+      templateLookup.query<HTMLInputElement>(CheckboxComponent).click();
       templateLookup.detectChanges();
 
       // THEN
@@ -66,7 +66,7 @@ describe("CheckboxDirective", () => {
       templateLookup.detectChanges();
 
       // WHEN
-      templateLookup.query<HTMLInputElement>("input").click();
+      templateLookup.query<HTMLInputElement>(CheckboxComponent).click();
       templateLookup.detectChanges();
 
       // THEN
@@ -76,9 +76,9 @@ describe("CheckboxDirective", () => {
 
     test("check OnDestroy", () => {
       // GIVEN
-      const checkbox: CheckboxDirective<string> = templateLookup
+      const checkbox: CheckboxComponent<string> = templateLookup
         .get("input")
-        .injector.get(CheckboxDirective);
+        .injector.get(CheckboxComponent);
       jest.spyOn(checkbox.valueChange, "unsubscribe");
 
       // WHEN
@@ -102,13 +102,13 @@ describe("CheckboxDirective", () => {
 
     test("check does not emit value", () => {
       // GIVEN
-      const checkbox: CheckboxDirective<string> = templateLookup
+      const checkbox: CheckboxComponent<string> = templateLookup
         .get("input")
-        .injector.get(CheckboxDirective);
+        .injector.get(CheckboxComponent);
       jest.spyOn(checkbox.valueChange, "emit");
 
       // WHEN
-      templateLookup.query<HTMLInputElement>("input").click();
+      templateLookup.query<HTMLInputElement>(CheckboxComponent).click();
       templateLookup.detectChanges();
 
       // THEN
@@ -130,13 +130,13 @@ describe("CheckboxDirective", () => {
 
     test("check does not emit value", () => {
       // GIVEN
-      const checkbox: CheckboxDirective<string> = templateLookup
+      const checkbox: CheckboxComponent<string> = templateLookup
         .get("input")
-        .injector.get(CheckboxDirective);
+        .injector.get(CheckboxComponent);
       jest.spyOn(checkbox.valueChange, "emit");
 
       // WHEN
-      templateLookup.query<HTMLInputElement>("input").click();
+      templateLookup.query<HTMLInputElement>(CheckboxComponent).click();
       templateLookup.detectChanges();
 
       // THEN
@@ -158,9 +158,9 @@ describe("CheckboxDirective", () => {
 
     test("should create checked", () => {
       // GIVEN
-      const checkbox: CheckboxDirective<string> = templateLookup
+      const checkbox: CheckboxComponent<string> = templateLookup
         .get("input")
-        .injector.get(CheckboxDirective);
+        .injector.get(CheckboxComponent);
 
       // WHEN
       templateLookup.detectChanges();
@@ -174,9 +174,9 @@ describe("CheckboxDirective", () => {
 
     test("should create unchecked", () => {
       // GIVEN
-      const checkbox: CheckboxDirective<string> = templateLookup
+      const checkbox: CheckboxComponent<string> = templateLookup
         .get("input")
-        .injector.get(CheckboxDirective);
+        .injector.get(CheckboxComponent);
       templateLookup.hostComponent.control.setValue(null);
 
       // WHEN
@@ -189,7 +189,7 @@ describe("CheckboxDirective", () => {
 
     test("check is touched on change", () => {
       // WHEN
-      templateLookup.query<HTMLInputElement>("input").click();
+      templateLookup.query<HTMLInputElement>(CheckboxComponent).click();
       templateLookup.detectChanges();
 
       // THEN
@@ -198,7 +198,7 @@ describe("CheckboxDirective", () => {
 
     test("check control value on change", () => {
       // WHEN
-      templateLookup.query<HTMLInputElement>("input").click();
+      templateLookup.query<HTMLInputElement>(CheckboxComponent).click();
       templateLookup.detectChanges();
 
       // THEN
@@ -219,13 +219,12 @@ describe("CheckboxDirective", () => {
 });
 
 @Component({
-  template: `<input
-    type="checkbox"
-    adrCheckbox
+  template: `<adr-checkbox
     value="{{ checkboxValue }}"
     (valueChange)="currentValue = $event"
     [checked]="checked"
-  />`,
+    >Basic</adr-checkbox
+  >`,
 })
 class BasicHostComponent {
   public checkboxValue!: any;
@@ -236,22 +235,19 @@ class BasicHostComponent {
 }
 
 @Component({
-  template: `<input type="checkbox" adrCheckbox value="val" readonly />`,
+  template: ` <adr-checkbox [value]="'val'" readOnly>ReadOnly</adr-checkbox>`,
 })
 class ReadonlyHostComponent {}
 
 @Component({
-  template: `<input type="checkbox" adrCheckbox value="val" disabled />`,
+  template: `<adr-checkbox [value]="'val'" disabled>Disabled</adr-checkbox>`,
 })
 class DisabledHostComponent {}
 
 @Component({
-  template: `<input
-    type="checkbox"
-    adrCheckbox
-    value="val"
-    [formControl]="control"
-  />`,
+  template: `<adr-checkbox [value]="'val'" [formControl]="control"
+    >Reactive</adr-checkbox
+  >`,
 })
 class ReactiveFormHostComponent {
   public control: FormControl = new FormControl("val");

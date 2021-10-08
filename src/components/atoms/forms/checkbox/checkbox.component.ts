@@ -1,5 +1,5 @@
 import {
-  Directive,
+  Component,
   EventEmitter,
   HostBinding,
   HostListener,
@@ -10,23 +10,32 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { AutoUnsubscribe } from "src/components/core/common/auto-unsubscribe.decorator";
 import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.decorator";
 
-@Directive({
-  selector: "input[adrCheckbox][type=checkbox]",
+@Component({
+  selector: "adr-checkbox",
   host: {
-    class: "adr-checkbox",
     "[attr.checked]": "checked || null",
-    "[attr.readonly]": "readonly || null",
+    "[attr.readonly]": "readOnly || null",
     "[attr.disabled]": "disabled || null",
     "[class.adr-checked]": "checked || null",
-    "[class.adr-readonly]": "readonly || null",
+    "[class.adr-readonly]": "readOnly || null",
     "[class.adr-disabled]": "disabled || null",
   },
+  template: `<input
+      type="checkbox"
+      [value]="value"
+      [readOnly]="readOnly || null"
+      [disabled]="disabled || null"
+      [checked]="checked || null"
+    />
+    <span class="adr-checkbox-label"><ng-content></ng-content></span>`,
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: CheckboxDirective, multi: true },
+    { provide: NG_VALUE_ACCESSOR, useExisting: CheckboxComponent, multi: true },
   ],
 })
 @AutoUnsubscribe()
-export class CheckboxDirective<T> implements ControlValueAccessor {
+export class CheckboxComponent<T> implements ControlValueAccessor {
+  // TIPS: HTMLInputElement.indeterminate = true;
+
   @Input()
   @HostBinding("attr.value")
   public value: T | null = null;
@@ -37,9 +46,7 @@ export class CheckboxDirective<T> implements ControlValueAccessor {
 
   @Input()
   @CoerceBoolean()
-  public readonly?: boolean;
-
-  // TIPS: HTMLInputElement.indeterminate = true;
+  public readOnly?: boolean;
 
   @Input()
   @CoerceBoolean()
@@ -64,16 +71,16 @@ export class CheckboxDirective<T> implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  protected _onChange = (_: any): void => {};
+  protected _onChange: (_: any) => void = (_: any): void => {};
 
-  protected _onTouched = (): void => {};
+  protected _onTouched: () => void = (): void => {};
 
   /**
    * @internal private usage
    */
   @HostListener("click")
   public onChange(): void {
-    if (!this.readonly) {
+    if (!this.readOnly && !this.disabled) {
       this._onTouched();
       this.checked = !this.checked;
       const emittedValue: T | null = this.checked ? this.value : null;
