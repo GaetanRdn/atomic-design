@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostBinding,
@@ -31,6 +32,7 @@ import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: CheckboxComponent, multi: true },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @AutoUnsubscribe()
 export class CheckboxComponent<T> implements ControlValueAccessor {
