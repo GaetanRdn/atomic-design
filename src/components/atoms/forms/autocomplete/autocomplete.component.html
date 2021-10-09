@@ -1,4 +1,4 @@
-<input adrInput [value]="value || ''" (focus)="openPanel()" (valueChange)="filterOptions($event)" />
+<input adrInput [value]="displayedValue" (focus)="openPanel()" (valueChange)="filterOptions($event)" />
 <div *ngIf="isOpen" class="adr-autocomplete-options">
     <span class="adr-option" [class.adr-selected]="value === option" *ngFor="let option of displayedValues$ | async"
           (click)="select(option)">{{ displayOptionFn(option) }}</span>

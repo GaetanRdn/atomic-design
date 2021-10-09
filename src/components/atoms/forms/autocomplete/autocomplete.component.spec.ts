@@ -5,16 +5,20 @@ import { AutocompleteComponent } from "./autocomplete.component";
 import { AutocompleteModule } from "./autocomplete.module";
 
 describe("AutocompleteComponent", () => {
-  let templateLookup: TemplateLookup<HostComponent>;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HostComponent, RequiredHostComponent],
+      declarations: [
+        HostComponent,
+        RequiredHostComponent,
+        ObjectValueHostComponent,
+      ],
       imports: [AutocompleteModule],
     });
   });
 
   describe("Basic", () => {
+    let templateLookup: TemplateLookup<HostComponent>;
+
     beforeEach(() => {
       templateLookup = new TemplateLookup<HostComponent>(
         TestBed.createComponent(HostComponent)
@@ -55,7 +59,7 @@ describe("AutocompleteComponent", () => {
       templateLookup.detectChanges();
 
       // WHEN
-      templateLookup.query(".adr-option:last-child").click();
+      templateLookup.query(".adr-option").click();
       templateLookup.detectChanges();
 
       // THEN
@@ -71,7 +75,7 @@ describe("AutocompleteComponent", () => {
       templateLookup.detectChanges();
 
       // WHEN
-      templateLookup.query(".adr-option:first-child").click();
+      templateLookup.query(".adr-option.adr-selected").click();
       templateLookup.detectChanges();
 
       // THEN
@@ -97,7 +101,7 @@ describe("AutocompleteComponent", () => {
     test("when input value then displayed options are filtered", () => {
       // GIVEN
       const input: DebugElement = templateLookup.get("input");
-      input.nativeElement.value = "G";
+      input.nativeElement.value = "g";
       input.triggerEventHandler("input", { target: input.nativeElement });
 
       // WHEN
@@ -110,6 +114,8 @@ describe("AutocompleteComponent", () => {
   });
 
   describe("Required", () => {
+    let templateLookup: TemplateLookup<RequiredHostComponent>;
+
     beforeEach(() => {
       templateLookup = new TemplateLookup<RequiredHostComponent>(
         TestBed.createComponent(RequiredHostComponent)
@@ -132,7 +138,7 @@ describe("AutocompleteComponent", () => {
       templateLookup.detectChanges();
 
       // WHEN
-      templateLookup.query(".adr-option:first-child").click();
+      templateLookup.query(".adr-option.adr-selected").click();
       templateLookup.detectChanges();
 
       // THEN
@@ -144,6 +150,27 @@ describe("AutocompleteComponent", () => {
         "Soren"
       );
       expect(templateLookup.hostComponent.value).toEqual("Soren");
+    });
+  });
+
+  describe("Objects as values", () => {
+    let templateLookup: TemplateLookup<ObjectValueHostComponent>;
+
+    beforeEach(() => {
+      templateLookup = new TemplateLookup<ObjectValueHostComponent>(
+        TestBed.createComponent(ObjectValueHostComponent)
+      );
+
+      templateLookup.detectChanges();
+    });
+
+    test("should create", () => {
+      // WHEN
+      templateLookup.query("input").focus();
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
     });
   });
 });
@@ -173,4 +200,30 @@ class RequiredHostComponent {
   public options: string[] = ["Soren", "Gaetan"];
 
   public value: string = "Soren";
+}
+
+interface Person {
+  id: number;
+  firstName: string;
+}
+
+@Component({
+  template: ` <adr-autocomplete
+      [options]="options"
+      [(value)]="value"
+      [displayOptionFn]="displayFn"
+      required
+    ></adr-autocomplete>
+    <span class="outside"></span>`,
+})
+class ObjectValueHostComponent {
+  public options: Person[] = [
+    { id: 1, firstName: "Soren" },
+    { id: 2, firstName: "Gaetan" },
+  ];
+
+  public value: Person = { id: 1, firstName: "Soren" };
+
+  public displayFn: (option: Person) => string = (option: Person): string =>
+    option.firstName;
 }

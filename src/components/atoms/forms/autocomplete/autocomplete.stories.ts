@@ -31,3 +31,40 @@ basic.args = {
   options: ["Gaetan", "Soren", "Bernard"],
   value: "",
 };
+
+interface Person {
+  id: number;
+  firstName: string;
+  name: string;
+}
+
+const objectsValuesTemplate: Story<AutocompleteComponent<Person>> = (
+  args: AutocompleteComponent<Person>
+) => ({
+  moduleMetadata: {
+    imports: [AutocompleteModule],
+  },
+  props: {
+    ...args,
+    valueChange: action("valueChange"),
+    displayOptionFn: (option: Person): string =>
+      `${option.firstName} - ${option.name}`,
+  },
+  template: `
+  <adr-autocomplete [value]="value" 
+  [options]="options" 
+  [required]="required" 
+  (valueChange)="valueChange($event)"
+  [displayOptionFn]="displayOptionFn">
+  </adr-autocomplete>`,
+});
+
+export const complexValues = objectsValuesTemplate.bind({});
+complexValues.args = {
+  options: [
+    { id: 1, firstName: "Gaetan", name: "Redin" },
+    { id: 2, firstName: "Soren", name: "Redin" },
+    { id: 3, firstName: "Lord", name: "Voldemor" },
+  ],
+  value: { id: 2, firstName: "Soren", name: "Redin" },
+};

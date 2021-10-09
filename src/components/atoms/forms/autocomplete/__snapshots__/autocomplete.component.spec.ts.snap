@@ -16,7 +16,7 @@ exports[`AutocompleteComponent Basic when click on option then panel is closed 1
   <input
     adrinput=""
     class="adr-input adr-focused"
-    value="Gaetan"
+    value=""
   />
   
 </adr-autocomplete>
@@ -48,14 +48,14 @@ exports[`AutocompleteComponent Basic when focus then options panel is open 1`] =
   >
     
     <span
-      class="adr-option adr-selected"
-    >
-      Soren
-    </span>
-    <span
       class="adr-option"
     >
       Gaetan
+    </span>
+    <span
+      class="adr-option adr-selected"
+    >
+      Soren
     </span>
   </div>
 </adr-autocomplete>
@@ -68,13 +68,42 @@ exports[`AutocompleteComponent Basic when input value then displayed options are
   <input
     adrinput=""
     class="adr-input adr-focused"
-    value="G"
+    value="g"
   />
   
   <div
     class="adr-autocomplete-options"
   >
     
+    <span
+      class="adr-option"
+    >
+      Gaetan
+    </span>
+  </div>
+</adr-autocomplete>
+`;
+
+exports[`AutocompleteComponent Objects as values should create 1`] = `
+<adr-autocomplete
+  class="adr-opened"
+  required="true"
+>
+  <input
+    adrinput=""
+    class="adr-input adr-focused"
+    value="Soren"
+  />
+  
+  <div
+    class="adr-autocomplete-options"
+  >
+    
+    <span
+      class="adr-option"
+    >
+      Soren
+    </span>
     <span
       class="adr-option"
     >
@@ -113,14 +142,14 @@ exports[`AutocompleteComponent Required when required and click on selected opti
   >
     
     <span
-      class="adr-option adr-selected"
-    >
-      Soren
-    </span>
-    <span
       class="adr-option"
     >
       Gaetan
+    </span>
+    <span
+      class="adr-option adr-selected"
+    >
+      Soren
     </span>
   </div>
 </adr-autocomplete>
