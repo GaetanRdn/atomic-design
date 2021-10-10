@@ -138,13 +138,11 @@ addOption.args = {
     createOptionFn: function (input: string) {
         if (input.includes('-')) {
             return {
-                id: NaN,
                 firstName: input.split('-')[0].trim(),
                 name: input.split('-')[1].trim(),
             } as Person;
         }
         return {
-            id: NaN,
             firstName: input,
             name: '',
         } as Person;
