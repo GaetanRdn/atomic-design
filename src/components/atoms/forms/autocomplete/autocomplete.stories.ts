@@ -34,9 +34,9 @@ basic.args = {
 };
 
 interface Person {
-    id: number | null;
+    id?: number;
     firstName: string;
-    name: string | null;
+    name: string;
 }
 
 const objectsValuesTemplate: Story<AutocompleteComponent<Person>> = (
@@ -138,15 +138,15 @@ addOption.args = {
     createOptionFn: function (input: string) {
         if (input.includes('-')) {
             return {
-                id: null,
+                id: NaN,
                 firstName: input.split('-')[0].trim(),
                 name: input.split('-')[1].trim(),
             } as Person;
         }
         return {
-            id: null,
+            id: NaN,
             firstName: input,
-            name: null,
+            name: '',
         } as Person;
     },
 };
