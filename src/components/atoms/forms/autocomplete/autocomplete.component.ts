@@ -8,6 +8,10 @@ import {
   Output,
 } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
+import {
+  DisplayFn,
+  OpenOn,
+} from "src/components/atoms/forms/autocomplete/autocomplete.models";
 import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.decorator";
 
 @Component({
@@ -39,6 +43,9 @@ export class AutocompleteComponent<T> {
   @CoerceBoolean()
   public required: boolean = false;
 
+  @Input()
+  public openOn: OpenOn = "focus";
+
   @Output()
   public readonly valueChange: EventEmitter<T | null> = new EventEmitter<T | null>();
 
@@ -54,7 +61,7 @@ export class AutocompleteComponent<T> {
     return this.value !== null ? this.displayOptionFn(this.value) : "";
   }
 
-  private _isOpen = false;
+  private _isOpen: boolean = false;
 
   get isOpen(): boolean {
     return this._isOpen;
@@ -63,7 +70,7 @@ export class AutocompleteComponent<T> {
   constructor(private _elementRef: ElementRef) {}
 
   @Input()
-  public displayOptionFn: (option: T) => string = (option: T): string =>
+  public displayOptionFn: DisplayFn<T> = (option: T): string =>
     (option as unknown) as string;
 
   @HostListener("document:click", ["$event.target"])
@@ -74,7 +81,9 @@ export class AutocompleteComponent<T> {
   }
 
   public openPanel(): void {
-    this._isOpen = true;
+    if (this.openOn === "focus") {
+      this._isOpen = true;
+    }
   }
 
   public select(option: T): void {
@@ -95,6 +104,9 @@ export class AutocompleteComponent<T> {
   }
 
   public filterOptions(inputValue: string): void {
+    if (this.openOn === "input" && !this.isOpen) {
+      this._isOpen = true;
+    }
     this._displayedValues$.next(
       this._options.filter((option: T) =>
         this.displayOptionFn(option)

@@ -19,7 +19,8 @@ const template: Story<AutocompleteComponent<string>> = (
     valueChange: action("valueChange"),
   },
   template: `
-  <adr-autocomplete [value]="value" 
+  <adr-autocomplete [value]="value"
+  [openOn]="openOn"
   [options]="options" 
   [required]="required" 
   (valueChange)="valueChange($event)">
@@ -51,7 +52,8 @@ const objectsValuesTemplate: Story<AutocompleteComponent<Person>> = (
       `${option.firstName} - ${option.name}`,
   },
   template: `
-  <adr-autocomplete [value]="value" 
+  <adr-autocomplete [value]="value"
+  [openOn]="openOn"
   [options]="options" 
   [required]="required" 
   (valueChange)="valueChange($event)"

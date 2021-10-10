@@ -11,6 +11,7 @@ describe("AutocompleteComponent", () => {
         HostComponent,
         RequiredHostComponent,
         ObjectValueHostComponent,
+        OpenOnInputHostComponent,
       ],
       imports: [AutocompleteModule],
     });
@@ -173,6 +174,41 @@ describe("AutocompleteComponent", () => {
       expect(templateLookup.firstChildElement).toMatchSnapshot();
     });
   });
+
+  describe("Open on input", () => {
+    let templateLookup: TemplateLookup<OpenOnInputHostComponent>;
+
+    beforeEach(() => {
+      templateLookup = new TemplateLookup<OpenOnInputHostComponent>(
+        TestBed.createComponent(OpenOnInputHostComponent)
+      );
+
+      templateLookup.detectChanges();
+    });
+
+    test("should not open on focus", () => {
+      // WHEN
+      templateLookup.query("input").focus();
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+
+    test("should open on input with value", () => {
+      // GIVEN
+      const input: DebugElement = templateLookup.get("input");
+      input.nativeElement.value = "s";
+      templateLookup.detectChanges();
+
+      // WHEN
+      input.triggerEventHandler("input", { target: input.nativeElement });
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+  });
 });
 
 @Component({
@@ -190,17 +226,26 @@ class HostComponent {
 
 @Component({
   template: ` <adr-autocomplete
-      [options]="options"
-      [(value)]="value"
-      required
-    ></adr-autocomplete>
-    <span class="outside"></span>`,
+    [options]="options"
+    [(value)]="value"
+    required
+  ></adr-autocomplete>`,
 })
-class RequiredHostComponent {
-  public options: string[] = ["Soren", "Gaetan"];
+class RequiredHostComponent extends HostComponent {}
 
-  public value: string = "Soren";
+interface Person {
+  id: number;
+  firstName: string;
 }
+
+@Component({
+  template: ` <adr-autocomplete
+    [options]="options"
+    [(value)]="value"
+    openOn="input"
+  ></adr-autocomplete>`,
+})
+class OpenOnInputHostComponent extends HostComponent {}
 
 interface Person {
   id: number;

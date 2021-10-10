@@ -113,6 +113,43 @@ exports[`AutocompleteComponent Objects as values should create 1`] = `
 </adr-autocomplete>
 `;
 
+exports[`AutocompleteComponent Open on input should not open on focus 1`] = `
+<adr-autocomplete
+  openon="input"
+>
+  <input
+    adrinput=""
+    class="adr-input adr-focused"
+    value="Soren"
+  />
+  
+</adr-autocomplete>
+`;
+
+exports[`AutocompleteComponent Open on input should open on input with value 1`] = `
+<adr-autocomplete
+  class="adr-opened"
+  openon="input"
+>
+  <input
+    adrinput=""
+    class="adr-input"
+    value="s"
+  />
+  
+  <div
+    class="adr-autocomplete-options"
+  >
+    
+    <span
+      class="adr-option adr-selected"
+    >
+      Soren
+    </span>
+  </div>
+</adr-autocomplete>
+`;
+
 exports[`AutocompleteComponent Required should create 1`] = `
 <adr-autocomplete
   required="true"
