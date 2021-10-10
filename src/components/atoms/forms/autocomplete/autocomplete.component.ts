@@ -13,10 +13,12 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { BehaviorSubject, Observable } from "rxjs";
 import {
+  CreateOptionFn,
   DisplayFn,
   IdentityFn,
   OpenOn,
 } from "src/components/atoms/forms/autocomplete/autocomplete.models";
+import { AutoUnsubscribe } from "src/components/core/common/auto-unsubscribe.decorator";
 import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.decorator";
 
 @Component({
@@ -38,6 +40,7 @@ import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@AutoUnsubscribe()
 export class AutocompleteComponent<T> implements ControlValueAccessor {
   @Input()
   set options(options: T[]) {
@@ -67,6 +70,10 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
   @Input()
   public displayOptionFn: DisplayFn<T> = (option: T): string =>
     (option as unknown) as string;
+
+  @Input()
+  public createOptionFn: CreateOptionFn<T> = (option: string): T =>
+    (option as unknown) as T;
 
   @Input()
   public identityFn: IdentityFn<T> = (value: T): any => value;
@@ -175,4 +182,14 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
   protected _onChange: (_: T | null) => void = (_: T | null): void => {};
 
   protected _onTouched: () => void = (): void => {};
+
+  public createOption(value: string): void {
+    if (typeof this.createOptionFn === "function") {
+      this.value = this.createOptionFn(value);
+      this._isOpen = false;
+      this._onChange(this.value);
+      this._onTouched();
+      this.valueChange.emit(this.value);
+    }
+  }
 }

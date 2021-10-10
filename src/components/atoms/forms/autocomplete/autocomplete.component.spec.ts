@@ -2,6 +2,7 @@ import { Component, DebugElement } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import {
+  CreateOptionFn,
   DisplayFn,
   IdentityFn,
 } from "src/components/atoms/forms/autocomplete/autocomplete.models";
@@ -19,6 +20,7 @@ describe("AutocompleteComponent", () => {
         OpenOnInputHostComponent,
         DisabledHostComponent,
         ReactiveFormHostComponent,
+        AddToOptionsIfNotFoundHostComponent,
       ],
       imports: [AutocompleteModule, ReactiveFormsModule],
     });
@@ -284,6 +286,33 @@ describe("AutocompleteComponent", () => {
       expect(templateLookup.firstChildElement).toMatchSnapshot();
     });
   });
+
+  describe("Create option if not found", () => {
+    let templateLookup: TemplateLookup<AddToOptionsIfNotFoundHostComponent>;
+
+    beforeEach(() => {
+      templateLookup = new TemplateLookup<AddToOptionsIfNotFoundHostComponent>(
+        TestBed.createComponent(AddToOptionsIfNotFoundHostComponent)
+      );
+
+      templateLookup.detectChanges();
+    });
+
+    test("should add option", () => {
+      // GIVEN
+      const input: DebugElement = templateLookup.get("input");
+      input.nativeElement.value = "Jojo";
+
+      // WHEN
+      templateLookup.query("input").focus();
+      templateLookup.detectChanges();
+      templateLookup.query("input").blur();
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.hostComponent.value).toEqual("Jojo");
+    });
+  });
 });
 
 interface Person {
@@ -334,6 +363,17 @@ class RequiredHostComponent extends HostComponent {}
   ></adr-autocomplete>`,
 })
 class OpenOnInputHostComponent extends HostComponent {}
+
+@Component({
+  template: ` <adr-autocomplete
+    [options]="options"
+    [(value)]="value"
+    [createOptionFn]="createOptionFn"
+  ></adr-autocomplete>`,
+})
+class AddToOptionsIfNotFoundHostComponent extends HostComponent {
+  public createOptionFn: CreateOptionFn<string> = (input: string) => input;
+}
 
 @Component({
   template: ` <adr-autocomplete
