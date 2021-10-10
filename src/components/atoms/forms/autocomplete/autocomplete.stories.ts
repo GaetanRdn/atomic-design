@@ -23,6 +23,7 @@ const template: Story<AutocompleteComponent<string>> = (
   [openOn]="openOn"
   [options]="options" 
   [required]="required" 
+  [disabled]="disabled" 
   (valueChange)="valueChange($event)">
   </adr-autocomplete>`,
 });
@@ -56,6 +57,7 @@ const objectsValuesTemplate: Story<AutocompleteComponent<Person>> = (
   [openOn]="openOn"
   [options]="options" 
   [required]="required" 
+  [disabled]="disabled"
   (valueChange)="valueChange($event)"
   [displayOptionFn]="displayOptionFn">
   </adr-autocomplete>`,

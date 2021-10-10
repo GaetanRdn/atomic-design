@@ -84,6 +84,36 @@ exports[`AutocompleteComponent Basic when input value then displayed options are
 </adr-autocomplete>
 `;
 
+exports[`AutocompleteComponent Disabled should create 1`] = `
+<adr-autocomplete
+  class="adr-disabled"
+  disabled="true"
+>
+  <input
+    adrinput=""
+    class="adr-input adr-disabled"
+    disabled=""
+    value="Soren"
+  />
+  
+</adr-autocomplete>
+`;
+
+exports[`AutocompleteComponent Disabled should not open on focus 1`] = `
+<adr-autocomplete
+  class="adr-disabled"
+  disabled="true"
+>
+  <input
+    adrinput=""
+    class="adr-input adr-disabled"
+    disabled=""
+    value="Soren"
+  />
+  
+</adr-autocomplete>
+`;
+
 exports[`AutocompleteComponent Objects as values should create 1`] = `
 <adr-autocomplete
   class="adr-opened"

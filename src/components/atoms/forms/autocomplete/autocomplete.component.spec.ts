@@ -12,6 +12,7 @@ describe("AutocompleteComponent", () => {
         RequiredHostComponent,
         ObjectValueHostComponent,
         OpenOnInputHostComponent,
+        DisabledHostComponent,
       ],
       imports: [AutocompleteModule],
     });
@@ -209,6 +210,31 @@ describe("AutocompleteComponent", () => {
       expect(templateLookup.firstChildElement).toMatchSnapshot();
     });
   });
+
+  describe("Disabled", () => {
+    let templateLookup: TemplateLookup<DisabledHostComponent>;
+
+    beforeEach(() => {
+      templateLookup = new TemplateLookup<DisabledHostComponent>(
+        TestBed.createComponent(DisabledHostComponent)
+      );
+
+      templateLookup.detectChanges();
+    });
+
+    test("should create", () => {
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+
+    test("should not open on focus", () => {
+      // WHEN
+      templateLookup.query("input").focus();
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+  });
 });
 
 @Component({
@@ -219,6 +245,19 @@ describe("AutocompleteComponent", () => {
     <span class="outside"></span>`,
 })
 class HostComponent {
+  public options: string[] = ["Soren", "Gaetan"];
+
+  public value: string = "Soren";
+}
+
+@Component({
+  template: ` <adr-autocomplete
+    [options]="options"
+    [(value)]="value"
+    disabled
+  ></adr-autocomplete>`,
+})
+class DisabledHostComponent {
   public options: string[] = ["Soren", "Gaetan"];
 
   public value: string = "Soren";

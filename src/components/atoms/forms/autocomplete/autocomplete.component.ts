@@ -18,7 +18,9 @@ import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.
   selector: "adr-autocomplete",
   host: {
     "[class.adr-opened]": "isOpen",
+    "[class.adr-disabled]": "disabled",
     "[attr.required]": "required || null",
+    "[attr.disabled]": "disabled || null",
   },
   templateUrl: "./autocomplete.component.html",
   styleUrls: ["./autocomplete.component.scss"],
@@ -45,6 +47,10 @@ export class AutocompleteComponent<T> {
 
   @Input()
   public openOn: OpenOn = "focus";
+
+  @Input()
+  @CoerceBoolean()
+  public disabled?: boolean;
 
   @Output()
   public readonly valueChange: EventEmitter<T | null> = new EventEmitter<T | null>();
