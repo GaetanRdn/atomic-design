@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   HostBinding,
@@ -57,6 +58,8 @@ export class CheckboxComponent<T> implements ControlValueAccessor {
   @Output()
   public readonly valueChange: EventEmitter<T | null> = new EventEmitter<T | null>();
 
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+
   public writeValue(obj: any): void {
     this.checked = obj !== null && obj !== undefined;
   }
@@ -71,6 +74,7 @@ export class CheckboxComponent<T> implements ControlValueAccessor {
 
   public setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    this._changeDetectorRef.markForCheck();
   }
 
   protected _onChange: (_: any) => void = (_: any): void => {};
