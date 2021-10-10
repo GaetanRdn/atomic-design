@@ -1,5 +1,10 @@
 import { Component, DebugElement } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import {
+  DisplayFn,
+  IdentityFn,
+} from "src/components/atoms/forms/autocomplete/autocomplete.models";
 import { TemplateLookup } from "src/components/core/tests/template-lookup";
 import { AutocompleteComponent } from "./autocomplete.component";
 import { AutocompleteModule } from "./autocomplete.module";
@@ -13,8 +18,9 @@ describe("AutocompleteComponent", () => {
         ObjectValueHostComponent,
         OpenOnInputHostComponent,
         DisabledHostComponent,
+        ReactiveFormHostComponent,
       ],
-      imports: [AutocompleteModule],
+      imports: [AutocompleteModule, ReactiveFormsModule],
     });
   });
 
@@ -235,7 +241,55 @@ describe("AutocompleteComponent", () => {
       expect(templateLookup.firstChildElement).toMatchSnapshot();
     });
   });
+
+  describe("Reactive form", () => {
+    let templateLookup: TemplateLookup<ReactiveFormHostComponent>;
+
+    beforeEach(() => {
+      templateLookup = new TemplateLookup<ReactiveFormHostComponent>(
+        TestBed.createComponent(ReactiveFormHostComponent)
+      );
+
+      templateLookup.detectChanges();
+    });
+
+    test("should create", () => {
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+
+    test("should update control on select", () => {
+      // GIVEN
+      templateLookup.query("input").focus();
+      templateLookup.detectChanges();
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+
+      // WHEN
+      templateLookup.query(".adr-option:not(.adr-selected)").click();
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+      expect(templateLookup.hostComponent.control.value).toEqual({
+        id: 2,
+        firstName: "Gaetan",
+      });
+    });
+
+    test("should be disabled", () => {
+      // WHEN
+      templateLookup.hostComponent.control.disable();
+      templateLookup.detectChanges();
+
+      // THEN
+      expect(templateLookup.firstChildElement).toMatchSnapshot();
+    });
+  });
 });
+
+interface Person {
+  id: number;
+  firstName: string;
+}
 
 @Component({
   template: ` <adr-autocomplete
@@ -272,11 +326,6 @@ class DisabledHostComponent {
 })
 class RequiredHostComponent extends HostComponent {}
 
-interface Person {
-  id: number;
-  firstName: string;
-}
-
 @Component({
   template: ` <adr-autocomplete
     [options]="options"
@@ -285,11 +334,6 @@ interface Person {
   ></adr-autocomplete>`,
 })
 class OpenOnInputHostComponent extends HostComponent {}
-
-interface Person {
-  id: number;
-  firstName: string;
-}
 
 @Component({
   template: ` <adr-autocomplete
@@ -308,6 +352,32 @@ class ObjectValueHostComponent {
 
   public value: Person = { id: 1, firstName: "Soren" };
 
-  public displayFn: (option: Person) => string = (option: Person): string =>
+  public displayFn: DisplayFn<Person> = (option: Person): string =>
+    option.firstName;
+}
+
+@Component({
+  template: ` <adr-autocomplete
+      [options]="options"
+      [formControl]="control"
+      [displayOptionFn]="displayFn"
+      [identityFn]="identityFn"
+    ></adr-autocomplete>
+    <span class="outside"></span>`,
+})
+class ReactiveFormHostComponent {
+  public options: Person[] = [
+    { id: 1, firstName: "Soren" },
+    { id: 2, firstName: "Gaetan" },
+  ];
+
+  public readonly control: FormControl = new FormControl({
+    id: 1,
+    firstName: "Soren",
+  });
+
+  public identityFn: IdentityFn<Person> = (p: Person) => p.id;
+
+  public displayFn: DisplayFn<Person> = (option: Person): string =>
     option.firstName;
 }

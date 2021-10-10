@@ -1,15 +1,20 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   HostListener,
   Input,
   Output,
+  TrackByFunction,
 } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { BehaviorSubject, Observable } from "rxjs";
 import {
   DisplayFn,
+  IdentityFn,
   OpenOn,
 } from "src/components/atoms/forms/autocomplete/autocomplete.models";
 import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.decorator";
@@ -24,9 +29,16 @@ import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.
   },
   templateUrl: "./autocomplete.component.html",
   styleUrls: ["./autocomplete.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AutocompleteComponent),
+      multi: true,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutocompleteComponent<T> {
+export class AutocompleteComponent<T> implements ControlValueAccessor {
   @Input()
   set options(options: T[]) {
     this._options = (options || []).sort((a: T, b: T) =>
@@ -52,6 +64,16 @@ export class AutocompleteComponent<T> {
   @CoerceBoolean()
   public disabled?: boolean;
 
+  @Input()
+  public displayOptionFn: DisplayFn<T> = (option: T): string =>
+    (option as unknown) as string;
+
+  @Input()
+  public identityFn: IdentityFn<T> = (value: T): any => value;
+
+  public trackByFn: TrackByFunction<T> = (_: number, value: T) =>
+    this.identityFn(value);
+
   @Output()
   public readonly valueChange: EventEmitter<T | null> = new EventEmitter<T | null>();
 
@@ -73,11 +95,10 @@ export class AutocompleteComponent<T> {
     return this._isOpen;
   }
 
-  constructor(private _elementRef: ElementRef) {}
-
-  @Input()
-  public displayOptionFn: DisplayFn<T> = (option: T): string =>
-    (option as unknown) as string;
+  constructor(
+    private _elementRef: ElementRef,
+    private _changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   @HostListener("document:click", ["$event.target"])
   public onClick(event: EventTarget): void {
@@ -95,7 +116,10 @@ export class AutocompleteComponent<T> {
   public select(option: T): void {
     let hasChanged = false;
 
-    if (this.value !== option) {
+    if (
+      this.value === null ||
+      this.identityFn(this.value) !== this.identityFn(option)
+    ) {
       this.value = option;
       hasChanged = true;
     } else if (!this.required) {
@@ -105,6 +129,8 @@ export class AutocompleteComponent<T> {
 
     if (hasChanged) {
       this._isOpen = false;
+      this._onChange(this.value);
+      this._onTouched();
       this.valueChange.emit(this.value);
     }
   }
@@ -121,4 +147,32 @@ export class AutocompleteComponent<T> {
       )
     );
   }
+
+  public isSelected(option: T): boolean {
+    return (
+      this.value !== null &&
+      this.identityFn(this.value) === this.identityFn(option)
+    );
+  }
+
+  public writeValue(value: any): void {
+    this.value = value;
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this._changeDetectorRef.markForCheck();
+  }
+
+  public registerOnChange(fn: any): void {
+    this._onChange = fn;
+  }
+
+  public registerOnTouched(fn: any): void {
+    this._onTouched = fn;
+  }
+
+  protected _onChange: (_: T | null) => void = (_: T | null): void => {};
+
+  protected _onTouched: () => void = (): void => {};
 }

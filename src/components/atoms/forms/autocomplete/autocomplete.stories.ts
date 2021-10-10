@@ -1,3 +1,4 @@
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/angular";
 import { AutocompleteComponent } from "./autocomplete.component";
@@ -71,4 +72,40 @@ complexValues.args = {
     { id: 3, firstName: "Lord", name: "Voldemor" },
   ],
   value: { id: 2, firstName: "Soren", name: "Redin" },
+};
+
+const reactiveFormTemplate: Story<AutocompleteComponent<Person>> = (
+  args: AutocompleteComponent<Person>
+) => ({
+  moduleMetadata: {
+    imports: [AutocompleteModule, ReactiveFormsModule],
+  },
+  props: {
+    ...args,
+    valueChange: action("valueChange"),
+    value: null,
+    displayOptionFn: (option: Person): string =>
+      `${option.firstName} - ${option.name}`,
+    control: new FormControl({ id: 2, firstName: "Soren", name: "Redin" }),
+    identityFn: (p: Person): any => p.id,
+  },
+  template: `
+  <adr-autocomplete 
+  [formControl]="control"
+  [openOn]="openOn"
+  [options]="options" 
+  [required]="required" 
+  (valueChange)="valueChange($event)"
+  [displayOptionFn]="displayOptionFn"
+  [identityFn]="identityFn">
+  </adr-autocomplete>`,
+});
+
+export const reactiveForm = reactiveFormTemplate.bind({});
+reactiveForm.args = {
+  options: [
+    { id: 1, firstName: "Gaetan", name: "Redin" },
+    { id: 2, firstName: "Soren", name: "Redin" },
+    { id: 3, firstName: "Lord", name: "Voldemor" },
+  ],
 };

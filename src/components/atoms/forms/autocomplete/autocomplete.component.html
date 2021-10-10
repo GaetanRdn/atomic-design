@@ -1,5 +1,6 @@
 <input adrInput [value]="displayedValue" (focus)="openPanel()" (valueChange)="filterOptions($event)" [disabled]="disabled" />
 <div *ngIf="isOpen" class="adr-autocomplete-options">
-    <span class="adr-option" [class.adr-selected]="value === option" *ngFor="let option of displayedValues$ | async"
+    <span class="adr-option" [class.adr-selected]="isSelected(option)" *ngFor="let option of displayedValues$ | async; trackBy:
+    trackByFn"
           (click)="select(option)">{{ displayOptionFn(option) }}</span>
 </div>
