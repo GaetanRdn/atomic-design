@@ -1,4 +1,14 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AutoUnsubscribe } from '../../../core/common/auto-unsubscribe.decorator';
 import { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decorator';
@@ -9,12 +19,12 @@ import { CoerceBoolean } from '../../../core/common/coerce-boolean-inputs.decora
     class: 'adr-input',
     '[class.adr-focused]': 'focused || null',
     '[class.adr-readonly]': 'readonly || null',
-    '[class.adr-disabled]': 'disabled || null'
+    '[class.adr-disabled]': 'disabled || null',
   },
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: InputDirective, multi: true }]
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: InputDirective, multi: true }],
 })
 @AutoUnsubscribe()
-export class InputDirective implements ControlValueAccessor {
+export class InputDirective implements ControlValueAccessor, OnChanges {
   @HostBinding('attr.value')
   @Input()
   public value: any;
@@ -44,6 +54,14 @@ export class InputDirective implements ControlValueAccessor {
 
   get focused(): boolean {
     return this._focused;
+  }
+
+  constructor(private _elementRef: ElementRef) {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.value) {
+      this._elementRef.nativeElement.value = this.value;
+    }
   }
 
   public writeValue(value: any): void {
@@ -81,9 +99,7 @@ export class InputDirective implements ControlValueAccessor {
     }
   }
 
-  protected _onChange = (_: any): void => {
-  };
+  protected _onChange = (_: any): void => {};
 
-  protected _onTouched = (): void => {
-  };
+  protected _onTouched = (): void => {};
 }
