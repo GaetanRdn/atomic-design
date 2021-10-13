@@ -9,28 +9,30 @@ import {
   Input,
   Output,
   TrackByFunction,
-} from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { BehaviorSubject, Observable } from "rxjs";
+  ViewChild,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   CreateOptionFn,
   DisplayFn,
   IdentityFn,
   OpenOn,
-} from "src/components/atoms/forms/autocomplete/autocomplete.models";
-import { AutoUnsubscribe } from "src/components/core/common/auto-unsubscribe.decorator";
-import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.decorator";
+} from 'src/components/atoms/forms/autocomplete/autocomplete.models';
+import { InputDirective } from 'src/components/atoms/forms/input/input.directive';
+import { AutoUnsubscribe } from 'src/components/core/common/auto-unsubscribe.decorator';
+import { CoerceBoolean } from 'src/components/core/common/coerce-boolean-inputs.decorator';
 
 @Component({
-  selector: "adr-autocomplete",
+  selector: 'adr-autocomplete',
   host: {
-    "[class.adr-opened]": "isOpen",
-    "[class.adr-disabled]": "disabled",
-    "[attr.required]": "required || null",
-    "[attr.disabled]": "disabled || null",
+    '[class.adr-opened]': 'isOpen',
+    '[class.adr-disabled]': 'disabled',
+    '[attr.required]': 'required || null',
+    '[attr.disabled]': 'disabled || null',
   },
-  templateUrl: "./autocomplete.component.html",
-  styleUrls: ["./autocomplete.component.scss"],
+  templateUrl: './autocomplete.component.html',
+  styleUrls: ['./autocomplete.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -43,17 +45,6 @@ import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.
 @AutoUnsubscribe()
 export class AutocompleteComponent<T> implements ControlValueAccessor {
   @Input()
-  set options(options: T[]) {
-    this._options = (options || []).sort((a: T, b: T) =>
-      this.displayOptionFn(a) < this.displayOptionFn(b) ? -1 : 1
-    );
-
-    this._displayedValues$.next(this._options);
-  }
-
-  private _options: T[] = [];
-
-  @Input()
   public value: T | null = null;
 
   @Input()
@@ -61,39 +52,35 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
   public required: boolean = false;
 
   @Input()
-  public openOn: OpenOn = "focus";
+  public openOn: OpenOn = 'focus';
 
   @Input()
   @CoerceBoolean()
   public disabled?: boolean;
 
-  @Input()
-  public displayOptionFn: DisplayFn<T> = (option: T): string =>
-    (option as unknown) as string;
-
-  @Input()
-  public createOptionFn: CreateOptionFn<T> = (option: string): T =>
-    (option as unknown) as T;
-
-  @Input()
-  public identityFn: IdentityFn<T> = (value: T): any => value;
-
-  public trackByFn: TrackByFunction<T> = (_: number, value: T) =>
-    this.identityFn(value);
-
   @Output()
   public readonly valueChange: EventEmitter<T | null> = new EventEmitter<T | null>();
 
-  private _displayedValues$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(
-    this.options
-  );
+  @ViewChild(InputDirective, { static: true })
+  private _input!: InputDirective;
 
-  public displayedValues$: Observable<
-    T[]
-  > = this._displayedValues$.asObservable();
+  private _displayedValues$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(this.options);
+
+  public displayedValues$: Observable<T[]> = this._displayedValues$.asObservable();
+
+  private _options: T[] = [];
+
+  @Input()
+  set options(options: T[]) {
+    this._options = (options || []).sort((a: T, b: T) =>
+      this.displayOptionFn(a) < this.displayOptionFn(b) ? -1 : 1,
+    );
+
+    this._displayedValues$.next(this._options);
+  }
 
   get displayedValue(): string {
-    return this.value !== null ? this.displayOptionFn(this.value) : "";
+    return this.value !== null ? this.displayOptionFn(this.value) : '';
   }
 
   private _isOpen: boolean = false;
@@ -102,12 +89,20 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
     return this._isOpen;
   }
 
-  constructor(
-    private _elementRef: ElementRef,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {}
 
-  @HostListener("document:click", ["$event.target"])
+  @Input()
+  public displayOptionFn: DisplayFn<T> = (option: T): string => option as unknown as string;
+
+  @Input()
+  public createOptionFn?: CreateOptionFn<T>;
+
+  @Input()
+  public identityFn: IdentityFn<T> = (value: T): any => value;
+
+  public trackByFn: TrackByFunction<T> = (_: number, value: T) => this.identityFn(value);
+
+  @HostListener('document:click', ['$event.target'])
   public onClick(event: EventTarget): void {
     if (!this._elementRef.nativeElement.contains(event)) {
       this._isOpen = false;
@@ -115,51 +110,34 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
   }
 
   public openPanel(): void {
-    if (this.openOn === "focus") {
+    if (this.openOn === 'focus') {
       this._isOpen = true;
     }
   }
 
   public select(option: T): void {
-    let hasChanged = false;
-
-    if (
-      this.value === null ||
-      this.identityFn(this.value) !== this.identityFn(option)
-    ) {
-      this.value = option;
-      hasChanged = true;
+    if (this.value === null || this.identityFn(this.value) !== this.identityFn(option)) {
+      this.propagateChange(option);
     } else if (!this.required) {
-      this.value = null;
-      hasChanged = true;
-    }
-
-    if (hasChanged) {
-      this._isOpen = false;
-      this._onChange(this.value);
-      this._onTouched();
-      this.valueChange.emit(this.value);
+      this.propagateChange(null);
     }
   }
 
-  public filterOptions(inputValue: string): void {
-    if (this.openOn === "input" && !this.isOpen) {
+  public filterOptions(target: EventTarget): void {
+    if (this.openOn === 'input' && !this.isOpen) {
       this._isOpen = true;
     }
     this._displayedValues$.next(
       this._options.filter((option: T) =>
         this.displayOptionFn(option)
           .toLocaleLowerCase()
-          .includes(inputValue.toLocaleLowerCase())
-      )
+          .includes((target as HTMLInputElement).value.toLocaleLowerCase()),
+      ),
     );
   }
 
   public isSelected(option: T): boolean {
-    return (
-      this.value !== null &&
-      this.identityFn(this.value) === this.identityFn(option)
-    );
+    return this.value !== null && this.identityFn(this.value) === this.identityFn(option);
   }
 
   public writeValue(value: any): void {
@@ -179,17 +157,32 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
     this._onTouched = fn;
   }
 
+  public createOption(target: EventTarget): void {
+    const value: string = (target as HTMLInputElement).value;
+    console.log(
+      typeof this.createOptionFn === 'function',
+      value.length,
+      this._displayedValues$.getValue().length,
+    );
+    if (
+      typeof this.createOptionFn === 'function' &&
+      value.length !== 0 &&
+      this._displayedValues$.getValue().length === 0
+    ) {
+      console.log('toto');
+      this.propagateChange(this.createOptionFn(value));
+    }
+  }
+
   protected _onChange: (_: T | null) => void = (_: T | null): void => {};
 
   protected _onTouched: () => void = (): void => {};
 
-  public createOption(value: string): void {
-    if (typeof this.createOptionFn === "function") {
-      this.value = this.createOptionFn(value);
-      this._isOpen = false;
-      this._onChange(this.value);
-      this._onTouched();
-      this.valueChange.emit(this.value);
-    }
+  private propagateChange(value: T | null): void {
+    this.value = value;
+    this._isOpen = false;
+    this._onChange(this.value);
+    this._onTouched();
+    this.valueChange.emit(this.value);
   }
 }

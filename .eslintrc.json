@@ -36,7 +36,8 @@
                     }
                 ],
                 "@angular-eslint/no-host-metadata-property": 0,
-                "max-len": ["warn", { "code": 100 }]
+                "max-len": ["warn", { "code": 100 }],
+                "indent": ["error", 2]
             }
         },
         {
