@@ -20,14 +20,7 @@ const template: Story<AutocompleteComponent<string>> = (args: AutocompleteCompon
     ...args,
     valueChange: action('valueChange'),
   },
-  template: `
-  <adr-autocomplete [value]="value"
-  [openOn]="openOn"
-  [options]="options" 
-  [required]="required" 
-  [disabled]="disabled" 
-  (valueChange)="valueChange($event)">
-  </adr-autocomplete>`,
+  template: `<adr-autocomplete [value]="value" [openOn]="openOn" [options]="options" [required]="required" [disabled]="disabled" (valueChange)="valueChange($event)"></adr-autocomplete>`,
 });
 
 export const basic = template.bind({});
@@ -53,15 +46,7 @@ const objectsValuesTemplate: Story<AutocompleteComponent<Person>> = (
     valueChange: action('valueChange'),
     displayOptionFn: (option: Person): string => `${option.firstName} - ${option.name}`,
   },
-  template: `
-  <adr-autocomplete [value]="value"
-  [openOn]="openOn"
-  [options]="options" 
-  [required]="required" 
-  [disabled]="disabled"
-  (valueChange)="valueChange($event)"
-  [displayOptionFn]="displayOptionFn">
-  </adr-autocomplete>`,
+  template: `<adr-autocomplete [value]="value" [openOn]="openOn" [options]="options" [required]="required" [disabled]="disabled" (valueChange)="valueChange($event)" [displayOptionFn]="displayOptionFn"></adr-autocomplete>`,
 });
 
 export const complexValues = objectsValuesTemplate.bind({});
@@ -88,16 +73,7 @@ const reactiveFormTemplate: Story<AutocompleteComponent<Person>> = (
     control: new FormControl({ id: 2, firstName: 'Soren', name: 'Redin' }),
     identityFn: (p: Person): any => p.id,
   },
-  template: `
-  <adr-autocomplete 
-  [formControl]="control"
-  [openOn]="openOn"
-  [options]="options" 
-  [required]="required" 
-  (valueChange)="valueChange($event)"
-  [displayOptionFn]="displayOptionFn"
-  [identityFn]="identityFn">
-  </adr-autocomplete>`,
+  template: `<adr-autocomplete [formControl]="control" [openOn]="openOn" [options]="options" [required]="required" (valueChange)="valueChange($event)" [displayOptionFn]="displayOptionFn" [identityFn]="identityFn"></adr-autocomplete>`,
 });
 
 export const reactiveForm = reactiveFormTemplate.bind({});
@@ -134,12 +110,7 @@ const addOptionTemplate: Story<AutocompleteComponent<Person>> = (
       }
     },
   },
-  template: `
-<adr-autocomplete 
-[value]="value" [openOn]="openOn" [options]="options" 
-[required]="required" (valueChange)="valueChange($event)"
-[displayOptionFn]="displayOptionFn" [createOptionFn]="createOptionFn"
-[identityFn]="identityFn"></adr-autocomplete>`,
+  template: `<adr-autocomplete [value]="value" [openOn]="openOn" [options]="options" [required]="required" (valueChange)="valueChange($event)" [displayOptionFn]="displayOptionFn" [createOptionFn]="createOptionFn" [identityFn]="identityFn"></adr-autocomplete>`,
 });
 
 export const addOption = addOptionTemplate.bind({});
