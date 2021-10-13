@@ -159,12 +159,17 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
 
   public createOption(target: EventTarget): void {
     const value: string = (target as HTMLInputElement).value;
-
+    console.log(
+      typeof this.createOptionFn === 'function',
+      value.length,
+      this._displayedValues$.getValue().length,
+    );
     if (
       typeof this.createOptionFn === 'function' &&
       value.length !== 0 &&
       this._displayedValues$.getValue().length === 0
     ) {
+      console.log('toto');
       this.propagateChange(this.createOptionFn(value));
     }
   }
