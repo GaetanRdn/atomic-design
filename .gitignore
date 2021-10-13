@@ -47,3 +47,4 @@ Thumbs.db
 # storybook
 /storybook-static
 documentation.json
+.jest-test-results.json

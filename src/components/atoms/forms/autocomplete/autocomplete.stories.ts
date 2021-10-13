@@ -7,6 +7,9 @@ import { AutocompleteModule } from './autocomplete.module';
 export default {
   title: 'atoms/forms/autocomplete',
   component: AutocompleteComponent,
+  parameters: {
+    jest: ['autocomplete.component.spec.ts'],
+  },
 } as Meta<AutocompleteComponent<string>>;
 
 const template: Story<AutocompleteComponent<string>> = (args: AutocompleteComponent<string>) => ({

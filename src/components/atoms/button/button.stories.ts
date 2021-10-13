@@ -5,8 +5,7 @@ import { ButtonDirective } from 'src/components/atoms/button/button.directive';
 
 @Component({
   selector: 'adr-dummy',
-  template: `
-      <button adrButton [size]="size" [outlined]="outlined" [color]="color">Click</button>`
+  template: ` <button adrButton [size]="size" [outlined]="outlined" [color]="color">Click</button>`,
 })
 class DummyComponent {
   @Input()
@@ -21,12 +20,15 @@ class DummyComponent {
 
 export default {
   title: 'atoms/button',
-  component: DummyComponent
+  component: DummyComponent,
+  parameters: {
+    jest: ['button.directive.spec.ts'],
+  },
 } as Meta;
 
 const Template: Story<DummyComponent> = (args) => ({
-  props: args, moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] }
+  props: args,
+  moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] },
 });
 
 export const Default = Template.bind({});
-
