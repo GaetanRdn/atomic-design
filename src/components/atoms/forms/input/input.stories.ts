@@ -5,9 +5,14 @@ import { InputDirective } from 'src/components/atoms/forms/input/input.directive
 
 @Component({
   selector: 'adr-input-dummy',
-  template: `
-      <input adrInput [disabled]="disabled" [readonly]="readonly" [value]="value" (valueChange)="valueChange.emit($event)"
-             placeholder="default input" />`
+  template: ` <input
+    adrInput
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [value]="value"
+    (valueChange)="valueChange.emit($event)"
+    placeholder="default input"
+  />`,
 })
 class InputDummyComponent {
   @Input()
@@ -26,17 +31,20 @@ class InputDummyComponent {
 export default {
   title: 'atoms/forms/input',
   argTypes: {
-    value: { control: { type: 'text' } }
+    value: { control: { type: 'text' } },
   },
-  component: InputDummyComponent
+  component: InputDummyComponent,
+  parameters: {
+    jest: ['input.directive.spec.ts'],
+  },
 } as Meta;
 
 const BasicTemplate: Story<InputDummyComponent> = (args) => ({
   props: {
     ...args,
-    valueChange: action('log')
+    valueChange: action('log'),
   },
-  moduleMetadata: { declarations: [InputDirective] }
+  moduleMetadata: { declarations: [InputDirective] },
 });
 
 export const Default = BasicTemplate.bind({});
