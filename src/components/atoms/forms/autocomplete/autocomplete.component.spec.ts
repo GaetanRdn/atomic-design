@@ -7,8 +7,7 @@ import {
   IdentityFn,
 } from 'src/components/atoms/forms/autocomplete/autocomplete.models';
 import { TemplateLookup } from 'src/components/core/tests/template-lookup';
-import { AutocompleteComponent } from './autocomplete.component';
-import { AutocompleteModule } from './autocomplete.module';
+import { AutocompleteComponent, AutocompleteModule } from './autocomplete.component';
 
 describe('AutocompleteComponent', () => {
   beforeEach(() => {

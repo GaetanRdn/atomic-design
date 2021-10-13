@@ -1,8 +1,7 @@
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { action } from '@storybook/addon-actions';
 import { Meta, Story } from '@storybook/angular';
-import { AutocompleteComponent } from './autocomplete.component';
-import { AutocompleteModule } from './autocomplete.module';
+import { AutocompleteComponent, AutocompleteModule } from './autocomplete.component';
 
 export default {
   title: 'atoms/forms/autocomplete',
