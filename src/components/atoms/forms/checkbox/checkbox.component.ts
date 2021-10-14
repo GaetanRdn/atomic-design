@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,21 +7,23 @@ import {
   HostBinding,
   HostListener,
   Input,
+  NgModule,
   Output,
-} from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { AutoUnsubscribe } from "src/components/core/common/auto-unsubscribe.decorator";
-import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.decorator";
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AutoUnsubscribe } from 'src/components/core/common/auto-unsubscribe.decorator';
+import { CoerceBoolean } from 'src/components/core/common/coerce-boolean-inputs.decorator';
 
 @Component({
-  selector: "adr-checkbox",
+  selector: 'adr-checkbox',
+  // s
   host: {
-    "[attr.checked]": "checked || null",
-    "[attr.readonly]": "readOnly || null",
-    "[attr.disabled]": "disabled || null",
-    "[class.adr-checked]": "checked || null",
-    "[class.adr-readonly]": "readOnly || null",
-    "[class.adr-disabled]": "disabled || null",
+    '[attr.checked]': 'checked || null',
+    '[attr.readonly]': 'readOnly || null',
+    '[attr.disabled]': 'disabled || null',
+    '[class.adr-checked]': 'checked || null',
+    '[class.adr-readonly]': 'readOnly || null',
+    '[class.adr-disabled]': 'disabled || null',
   },
   template: `<input
       type="checkbox"
@@ -30,9 +33,7 @@ import { CoerceBoolean } from "src/components/core/common/coerce-boolean-inputs.
       [checked]="checked || null"
     />
     <span class="adr-checkbox-label"><ng-content></ng-content></span>`,
-  providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: CheckboxComponent, multi: true },
-  ],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: CheckboxComponent, multi: true }],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @AutoUnsubscribe()
@@ -40,7 +41,7 @@ export class CheckboxComponent<T> implements ControlValueAccessor {
   // TIPS: HTMLInputElement.indeterminate = true;
 
   @Input()
-  @HostBinding("attr.value")
+  @HostBinding('attr.value')
   public value: T | null = null;
 
   @Input()
@@ -84,7 +85,7 @@ export class CheckboxComponent<T> implements ControlValueAccessor {
   /**
    * @internal private usage
    */
-  @HostListener("click")
+  @HostListener('click')
   public onChange(): void {
     if (!this.readOnly && !this.disabled) {
       this._onTouched();
@@ -95,3 +96,10 @@ export class CheckboxComponent<T> implements ControlValueAccessor {
     }
   }
 }
+
+@NgModule({
+  declarations: [CheckboxComponent],
+  exports: [CheckboxComponent],
+  imports: [CommonModule],
+})
+export class CheckboxModule {}
