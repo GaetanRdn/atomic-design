@@ -1,34 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
 import { Meta, Story } from '@storybook/angular';
 import { ButtonDirective } from 'src/components/atoms/button/button.directive';
 
-@Component({
-  selector: 'adr-dummy',
-  template: ` <button adrButton [size]="size" [outlined]="outlined" [color]="color">Click</button>`,
-})
-class DummyComponent {
-  @Input()
-  public size: 'small' | 'medium' | 'large' = 'medium';
-
-  @Input()
-  public outlined: boolean = false;
-
-  @Input()
-  public color: 'primary' | 'accent' | 'warn' = 'primary';
-}
-
 export default {
   title: 'atoms/button',
-  component: DummyComponent,
+  component: ButtonDirective,
   parameters: {
     jest: ['button.directive.spec.ts'],
   },
-} as Meta;
+} as Meta<ButtonDirective>;
 
-const Template: Story<DummyComponent> = (args) => ({
+const Template: Story<ButtonDirective> = (args: ButtonDirective) => ({
   props: args,
   moduleMetadata: { declarations: [ButtonDirective], imports: [CommonModule] },
+  template: `<button adrButton [size]="size" [outlined]="outlined" [color]="color">Click</button>`,
 });
 
 export const Default = Template.bind({});

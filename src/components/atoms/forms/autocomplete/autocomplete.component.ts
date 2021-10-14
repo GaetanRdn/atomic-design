@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,7 +8,9 @@ import {
   forwardRef,
   HostListener,
   Input,
+  NgModule,
   Output,
+  Provider,
   TrackByFunction,
   ViewChild,
 } from '@angular/core';
@@ -19,12 +22,19 @@ import {
   IdentityFn,
   OpenOn,
 } from 'src/components/atoms/forms/autocomplete/autocomplete.models';
-import { InputDirective } from 'src/components/atoms/forms/input/input.directive';
+import { InputDirective, InputModule } from 'src/components/atoms/forms/input/input.directive';
 import { AutoUnsubscribe } from 'src/components/core/common/auto-unsubscribe.decorator';
 import { CoerceBoolean } from 'src/components/core/common/coerce-boolean-inputs.decorator';
 
+const AUTOCOMPLETE_VALUE_ACCESSOR: Provider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => AutocompleteComponent),
+  multi: true,
+};
+
 @Component({
   selector: 'adr-autocomplete',
+  // standalone: true,
   host: {
     '[class.adr-opened]': 'isOpen',
     '[class.adr-disabled]': 'disabled',
@@ -33,13 +43,7 @@ import { CoerceBoolean } from 'src/components/core/common/coerce-boolean-inputs.
   },
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AutocompleteComponent),
-      multi: true,
-    },
-  ],
+  providers: [AUTOCOMPLETE_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @AutoUnsubscribe()
@@ -169,7 +173,6 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
       value.length !== 0 &&
       this._displayedValues$.getValue().length === 0
     ) {
-      console.log('toto');
       this.propagateChange(this.createOptionFn(value));
     }
   }
@@ -186,3 +189,10 @@ export class AutocompleteComponent<T> implements ControlValueAccessor {
     this.valueChange.emit(this.value);
   }
 }
+
+@NgModule({
+  declarations: [AutocompleteComponent],
+  exports: [AutocompleteComponent],
+  imports: [CommonModule, InputModule],
+})
+export class AutocompleteModule {}
