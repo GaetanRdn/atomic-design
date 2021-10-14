@@ -22,8 +22,7 @@ import {
   IdentityFn,
   OpenOn,
 } from 'src/components/atoms/forms/autocomplete/autocomplete.models';
-import { InputDirective } from 'src/components/atoms/forms/input/input.directive';
-import { InputModule } from 'src/components/atoms/forms/input/input.module';
+import { InputDirective, InputModule } from 'src/components/atoms/forms/input/input.directive';
 import { AutoUnsubscribe } from 'src/components/core/common/auto-unsubscribe.decorator';
 import { CoerceBoolean } from 'src/components/core/common/coerce-boolean-inputs.decorator';
 
