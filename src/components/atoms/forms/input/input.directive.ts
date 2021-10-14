@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Directive,
   ElementRef,
@@ -5,6 +6,7 @@ import {
   HostBinding,
   HostListener,
   Input,
+  NgModule,
   OnChanges,
   Output,
   SimpleChanges,
@@ -103,3 +105,10 @@ export class InputDirective implements ControlValueAccessor, OnChanges {
 
   protected _onTouched = (): void => {};
 }
+
+@NgModule({
+  declarations: [InputDirective],
+  imports: [CommonModule],
+  exports: [InputDirective],
+})
+export class InputModule {}
